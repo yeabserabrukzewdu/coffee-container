@@ -1,0 +1,6 @@
+{
+  "name": "Coffee Container",
+  "description": "Official B2B platform for Coffee Container, a premier licensed Ethiopian coffee export company. Sourcing, processing, and shipping supreme green Arabica coffee beans directly from Yirgacheffe, Gesha, and Sidamo to global importers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

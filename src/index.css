@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Playfair Display", serif;
+  --font-serif: "Cormorant Garamond", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-coffee-50: #faf7f5;
+  --color-coffee-100: #f4ebe5;
+  --color-coffee-200: #e8d7cb;
+  --color-coffee-300: #d6baa6;
+  --color-coffee-400: #c19b80;
+  --color-coffee-500: #a97c5c;
+  --color-coffee-600: #8c5e3f;
+  --color-coffee-700: #704930;
+  --color-coffee-800: #593925;
+  --color-coffee-900: #422a1c;
+  --color-coffee-950: #291a11;
+
+  --color-leaf-50: #f4f8f0;
+  --color-leaf-100: #e6f0de;
+  --color-leaf-200: #cedfbf;
+  --color-leaf-300: #abc696;
+  --color-leaf-400: #82a868;
+  --color-leaf-500: #648c4a;
+  --color-leaf-600: #4d6f37;
+  --color-leaf-700: #3e582e;
+  --color-leaf-800: #334826;
+  --color-leaf-900: #2c3d22;
+  --color-leaf-950: #162210;
+}
+
+@layer base {
+  body {
+    @apply font-sans bg-coffee-50 text-coffee-950 antialiased selection:bg-leaf-200 selection:text-leaf-900;
+  }
+}
+
+/* Custom fade scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-coffee-200);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-coffee-300);
+}
+
+/* Smooth motion card styles */
+.premium-card {
+  @apply bg-white border border-coffee-100 rounded-sm shadow-xs hover:shadow-md transition-all duration-300;
+}
