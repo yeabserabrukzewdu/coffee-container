@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { GENERAL_INFO } from '../data';
 import { MapPin, Phone, Mail, Globe, Clock, Send, CheckCircle, HelpCircle } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface ContactSectionProps {
   setActiveTab?: (tab: string) => void;
 }
 
 export default function ContactSection({ setActiveTab }: ContactSectionProps) {
+  const { t, language } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -54,7 +56,7 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
           transition={{ duration: 1.5 }}
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ 
-            backgroundImage: "url('./23.webp')",
+            backgroundImage: "url('/40.webp')",
           }}
         />
         {/* Dark Vignette overlay matching the brand's premium feeling */}
@@ -68,7 +70,7 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-xs sm:text-sm font-sans font-extrabold tracking-[0.4em] text-leaf-300 uppercase block"
           >
-            GET IN TOUCH
+            {t('cont.getInTouch')}
           </motion.span>
           <motion.h1 
             initial={{ opacity: 0, y: 30 }}
@@ -76,7 +78,7 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
             transition={{ duration: 1, delay: 0.4 }}
             className="font-display font-light text-4xl sm:text-6xl md:text-7xl text-white tracking-wide italic"
           >
-            Connect with Origin
+            {t('cont.connect')}
           </motion.h1>
           <motion.div 
             initial={{ width: 0 }}
@@ -96,7 +98,7 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
           transition={{ duration: 0.8 }}
           className="text-[#c22d2d] font-sans text-xs sm:text-sm tracking-[0.4em] sm:tracking-[0.5em] uppercase font-extrabold"
         >
-          DIRECT COMMUNICATION & COLLABORATION
+          {t('cont.directComm')}
         </motion.h2>
         
         <motion.p 
@@ -106,7 +108,7 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
           transition={{ duration: 1, delay: 0.1 }}
           className="font-serif font-light text-base sm:text-lg md:text-xl text-coffee-900/90 leading-relaxed max-w-3xl mx-auto"
         >
-          We are committed to providing structured, transparent, and direct pathways for international green coffee sourcing. Reach out directly to our leadership teams, schedule origin visits, or inquire about current coffee stocks.
+          {t('cont.directP')}
         </motion.p>
       </section>
 
@@ -123,12 +125,12 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
               transition={{ duration: 0.8 }}
               className="bg-[#442c33] text-white p-8 sm:p-10 rounded-sm shadow-xl space-y-8"
             >
-              <div className="space-y-2">
+              <div className="space-y-2 font-serif">
                 <span className="text-[10px] font-mono tracking-widest text-red-300 uppercase font-extrabold">
-                  OFFICE & LOGISTICS HUB
+                  {t('cont.officeHub')}
                 </span>
                 <h3 className="font-serif font-light text-2xl sm:text-3xl text-white">
-                  Corporate Headquarters
+                  {t('cont.corpHeadquarters')}
                 </h3>
                 <div className="w-12 h-[1px] bg-red-400 my-4" />
               </div>
@@ -138,16 +140,20 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
                 <div className="flex items-start gap-4">
                   <MapPin className="w-5 h-5 text-red-300 shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-sans font-extrabold text-[11px] text-red-300 uppercase tracking-widest mb-1">HQ Location</h4>
-                    <p className="leading-relaxed">{GENERAL_INFO.contact.location}</p>
-                    <p className="text-xs text-coffee-300 mt-1 font-mono uppercase">Bole Subcity • Addis Ababa, Ethiopia</p>
+                    <h4 className="font-sans font-extrabold text-[11px] text-red-300 uppercase tracking-widest mb-1">{t('cont.hqLocation')}</h4>
+                    <p className="leading-relaxed">
+                      {language === 'ar' ? 'منطقة بولي، أديس أبابا، إثيوبيا' : GENERAL_INFO.contact.location}
+                    </p>
+                    <p className="text-xs text-coffee-300 mt-1 font-mono uppercase">
+                      {language === 'ar' ? 'منطقة بولي الفرعية • أديس أبابا، إثيوبيا' : 'Bole Subcity • Addis Ababa, Ethiopia'}
+                    </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
                   <Phone className="w-5 h-5 text-red-300 shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-sans font-extrabold text-[11px] text-red-300 uppercase tracking-widest mb-1">Direct Call</h4>
+                    <h4 className="font-sans font-extrabold text-[11px] text-red-300 uppercase tracking-widest mb-1">{t('cont.directCall')}</h4>
                     <p className="font-sans font-medium hover:text-white transition-colors">
                       <a href={`tel:${GENERAL_INFO.contact.phone.replace(/\s+/g, '')}`}>
                         {GENERAL_INFO.contact.phone}
@@ -159,7 +165,7 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
                 <div className="flex items-start gap-4">
                   <Mail className="w-5 h-5 text-red-300 shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-sans font-extrabold text-[11px] text-red-300 uppercase tracking-widest mb-1">Electronic Mail</h4>
+                    <h4 className="font-sans font-extrabold text-[11px] text-red-300 uppercase tracking-widest mb-1">{t('cont.electronicMail')}</h4>
                     <p className="font-sans hover:text-white transition-colors">
                       <a href={`mailto:${GENERAL_INFO.contact.email}`}>
                         {GENERAL_INFO.contact.email}
@@ -171,7 +177,7 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
                 <div className="flex items-start gap-4">
                   <Globe className="w-5 h-5 text-red-300 shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-sans font-extrabold text-[11px] text-red-300 uppercase tracking-widest mb-1">Official Site</h4>
+                    <h4 className="font-sans font-extrabold text-[11px] text-red-300 uppercase tracking-widest mb-1">{t('cont.officialSite')}</h4>
                     <p className="font-sans hover:text-white transition-colors">
                       <a href={`https://${GENERAL_INFO.contact.website}`} target="_blank" rel="noopener noreferrer">
                         {GENERAL_INFO.contact.website}
@@ -196,10 +202,10 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
                 </div>
                 <div>
                   <span className="text-[10px] font-mono tracking-widest text-leaf-700 uppercase font-extrabold block">
-                    OPERATIONAL TIME
+                    {t('cont.operationalTime')}
                   </span>
                   <h3 className="font-serif font-light text-xl text-coffee-950">
-                    Sourcing & Working Hours
+                    {t('cont.workingHours')}
                   </h3>
                 </div>
               </div>
@@ -208,20 +214,20 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
 
               <div className="space-y-4 font-serif font-light text-sm text-coffee-800">
                 <div className="flex justify-between items-center py-1">
-                  <span>Monday – Friday</span>
-                  <span className="font-sans text-xs font-semibold text-coffee-950">8:00 AM – 5:00 PM</span>
+                  <span>{t('cont.monFri')}</span>
+                  <span className="font-sans text-xs font-semibold text-coffee-950">{language === 'ar' ? '٨:٠٠ ص – ٥:٠٠ م' : '8:00 AM – 5:00 PM'}</span>
                 </div>
                 <div className="flex justify-between items-center py-1 border-t border-coffee-50">
-                  <span>Saturday</span>
-                  <span className="font-sans text-xs font-semibold text-coffee-950">8:00 AM – 12:30 PM</span>
+                  <span>{t('cont.sat')}</span>
+                  <span className="font-sans text-xs font-semibold text-coffee-950">{language === 'ar' ? '٨:٠٠ ص – ١٢:٣٠ م' : '8:00 AM – 12:30 PM'}</span>
                 </div>
                 <div className="flex justify-between items-center py-1 border-t border-coffee-50 text-coffee-400">
-                  <span>Sunday</span>
-                  <span className="font-sans text-xs uppercase tracking-wider font-semibold text-red-600">Closed</span>
+                  <span>{t('cont.sun')}</span>
+                  <span className="font-sans text-xs uppercase tracking-wider font-semibold text-red-600">{t('cont.closed')}</span>
                 </div>
 
                 <div className="p-4 bg-leaf-50/50 border border-leaf-100/30 rounded-sm mt-4 text-xs font-serif text-leaf-800 leading-relaxed italic">
-                  * Note: Sourcing schedules correspond to East Africa Time (EAT) / UTC+3. Sample evaluations and cupping tours must be arranged at least 48 hours in advance.
+                  {t('cont.eatNote')}
                 </div>
               </div>
             </motion.div>
@@ -237,10 +243,10 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
           >
             <div className="space-y-4 mb-8">
               <h3 className="font-serif font-light text-2xl sm:text-3xl text-coffee-950">
-                Direct Inquiry Intake
+                {t('cont.intake')}
               </h3>
               <p className="font-serif text-xs sm:text-sm text-coffee-600 font-light leading-relaxed">
-                Fill out our secure sourcing intake form below. An origin communications coordinator will process your message and respond within 24 operational hours.
+                {t('cont.intakeSub')}
               </p>
             </div>
 
@@ -248,17 +254,19 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
               <div className="bg-leaf-50/40 border border-leaf-100 p-8 rounded-sm space-y-4 text-center my-12">
                 <CheckCircle className="w-12 h-12 text-leaf-600 mx-auto" />
                 <h4 className="font-serif text-xl font-bold text-leaf-900">
-                  Transmission Succeeded
+                  {t('hero.quoteSuccess')}
                 </h4>
                 <p className="font-serif text-sm text-coffee-800 max-w-md mx-auto leading-relaxed">
-                  Your inquiry has been logged securely in our origin CRM. We appreciate your interest in structuring a premium coffee container partnership.
+                  {language === 'ar' 
+                    ? 'تم تسجيل طلب التوريد واستفساركم بنجاح في سجلات أديس أبابا. سنقوم بالتواصل معكم ومراجعة التفاصيل قريباً.'
+                    : 'Your inquiry has been logged securely in our origin CRM. We appreciate your interest in structuring a premium coffee container partnership.'}
                 </p>
                 <div className="pt-4">
                   <button
                     onClick={() => setIsSubmitted(false)}
                     className="px-6 py-2.5 bg-[#c22d2d] hover:bg-[#a12323] text-white font-sans text-xs font-bold tracking-widest uppercase rounded-sm transition-colors cursor-pointer"
                   >
-                    Send Another Message
+                    {language === 'ar' ? 'إرسال رسالة أخرى' : 'Send Another Message'}
                   </button>
                 </div>
               </div>
@@ -268,7 +276,7 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
                   {/* Full Name */}
                   <div className="space-y-2">
                     <label htmlFor="contact-name" className="block text-[11px] font-sans font-extrabold uppercase tracking-widest text-coffee-700">
-                      Your Full Name *
+                      {t('cont.fullName')}
                     </label>
                     <input
                       type="text"
@@ -277,7 +285,7 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
                       required
                       value={formData.name}
                       onChange={handleInputChange}
-                      placeholder="e.g. John Doe"
+                      placeholder={language === 'ar' ? 'مثال: محمد أحمد' : 'e.g. John Doe'}
                       className="w-full px-4 py-3 bg-coffee-50 border border-coffee-100 focus:border-leaf-500 rounded-sm text-sm focus:outline-none transition-colors"
                     />
                   </div>
@@ -285,7 +293,7 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
                   {/* Email Address */}
                   <div className="space-y-2">
                     <label htmlFor="contact-email" className="block text-[11px] font-sans font-extrabold uppercase tracking-widest text-coffee-700">
-                      Corporate Email *
+                      {t('cont.corpEmail')}
                     </label>
                     <input
                       type="email"
@@ -295,7 +303,7 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
                       value={formData.email}
                       onChange={handleInputChange}
                       placeholder="john@company.com"
-                      className="w-full px-4 py-3 bg-coffee-50 border border-coffee-100 focus:border-leaf-500 rounded-sm text-sm focus:outline-none transition-colors"
+                      className="w-full px-4 py-3 bg-coffee-50 border border-coffee-100 focus:border-leaf-500 rounded-sm text-sm focus:outline-none transition-colors font-sans"
                     />
                   </div>
                 </div>
@@ -304,7 +312,7 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
                   {/* Company Name */}
                   <div className="space-y-2">
                     <label htmlFor="contact-company" className="block text-[11px] font-sans font-extrabold uppercase tracking-widest text-coffee-700">
-                      Company / Roastery
+                      {t('cont.compRoastery')}
                     </label>
                     <input
                       type="text"
@@ -312,7 +320,7 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
                       name="company"
                       value={formData.company}
                       onChange={handleInputChange}
-                      placeholder="e.g. Blue Ridge Roasters"
+                      placeholder={language === 'ar' ? 'مثال: محمصة الأطلس المختصة' : 'e.g. Blue Ridge Roasters'}
                       className="w-full px-4 py-3 bg-coffee-50 border border-coffee-100 focus:border-leaf-500 rounded-sm text-sm focus:outline-none transition-colors"
                     />
                   </div>
@@ -320,7 +328,7 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
                   {/* Destination Country */}
                   <div className="space-y-2">
                     <label htmlFor="contact-country" className="block text-[11px] font-sans font-extrabold uppercase tracking-widest text-coffee-700">
-                      Destination Country
+                      {t('cont.destCountry')}
                     </label>
                     <input
                       type="text"
@@ -328,7 +336,7 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
                       name="country"
                       value={formData.country}
                       onChange={handleInputChange}
-                      placeholder="e.g. Germany"
+                      placeholder={language === 'ar' ? 'مثال: المملكة العربية السعودية' : 'e.g. Germany'}
                       className="w-full px-4 py-3 bg-coffee-50 border border-coffee-100 focus:border-leaf-500 rounded-sm text-sm focus:outline-none transition-colors"
                     />
                   </div>
@@ -337,7 +345,7 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
                 {/* Inquiry Type */}
                 <div className="space-y-2">
                   <label htmlFor="contact-inquiryType" className="block text-[11px] font-sans font-extrabold uppercase tracking-widest text-coffee-700">
-                    Primary Sourcing Objective
+                    {t('cont.primaryObj')}
                   </label>
                   <select
                     id="contact-inquiryType"
@@ -346,17 +354,17 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 bg-coffee-50 border border-coffee-100 focus:border-leaf-500 rounded-sm text-sm focus:outline-none transition-colors"
                   >
-                    <option value="Container Pricing">FCL Container Pricing / Direct Shipment</option>
-                    <option value="Green Sample Request">B2B Cupping Sample Request</option>
-                    <option value="Custom Sourcing Partnership">Custom Regional Sourcing Partnership</option>
-                    <option value="General Business Inquiry">General Business Collaboration</option>
+                    <option value="Container Pricing">{t('cont.fclPricing')}</option>
+                    <option value="Green Sample Request">{t('cont.greenSample')}</option>
+                    <option value="Custom Sourcing Partnership">{t('cont.customSourcing')}</option>
+                    <option value="General Business Inquiry">{t('cont.generalCollab')}</option>
                   </select>
                 </div>
 
                 {/* Message / Details */}
                 <div className="space-y-2">
                   <label htmlFor="contact-message" className="block text-[11px] font-sans font-extrabold uppercase tracking-widest text-coffee-700">
-                    Detailed Message / Specifications *
+                    {t('cont.detailedMsg')}
                   </label>
                   <textarea
                     id="contact-message"
@@ -365,7 +373,7 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
                     rows={5}
                     value={formData.message}
                     onChange={handleInputChange}
-                    placeholder="Specify regions (e.g. Yirgacheffe, Guji, Sidamo), requested cupping grades, volumes, and preferred shipment schedules..."
+                    placeholder={t('cont.detailedPlaceholder')}
                     className="w-full px-4 py-3 bg-coffee-50 border border-coffee-100 focus:border-leaf-500 rounded-sm text-sm focus:outline-none transition-colors resize-y"
                   />
                 </div>
@@ -381,12 +389,12 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
                   {isSubmitting ? (
                     <>
                       <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      <span>Transmitting Sourcing Request...</span>
+                      <span>{t('cont.transmitting')}</span>
                     </>
                   ) : (
                     <>
                       <Send className="w-4 h-4" />
-                      <span>Submit Sourcing Intake</span>
+                      <span>{t('cont.submitIntake')}</span>
                     </>
                   )}
                 </motion.button>
@@ -405,15 +413,15 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
           transition={{ duration: 0.8 }}
           className="bg-white border border-coffee-100 rounded-sm p-4 shadow-lg text-left"
         >
-          <div className="p-4 sm:p-6 space-y-2 border-b border-coffee-50">
+          <div className="p-4 sm:p-6 space-y-2 border-b border-coffee-50 font-serif">
             <span className="text-[10px] font-mono tracking-widest text-[#c22d2d] uppercase font-extrabold block">
-              LOCATION AND MAP
+              {t('cont.locationMap')}
             </span>
             <h3 className="font-serif font-light text-xl sm:text-2xl text-coffee-950">
-              Addis Ababa Head Office & Sample Room
+              {t('cont.sampleRoom')}
             </h3>
             <p className="font-serif text-xs text-coffee-500 font-light">
-              Visit our central office to explore green samples and cup with our certified Q-graders. Close proximity to Bole International Airport (ADD).
+              {t('cont.sampleRoomSub')}
             </p>
           </div>
 
@@ -430,12 +438,12 @@ export default function ContactSection({ setActiveTab }: ContactSectionProps) {
             />
           </div>
 
-          <div className="p-4 bg-coffee-50 flex flex-col sm:flex-row justify-between items-start sm:items-center text-xs font-mono text-coffee-600 gap-4">
+          <div className="p-4 bg-coffee-50 flex flex-col sm:flex-row justify-between items-start sm:items-center text-xs font-mono text-coffee-600 gap-4 font-serif">
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-leaf-500 animate-ping shrink-0" />
-              <span>Location Coordinate: Bole District, Addis Ababa, Ethiopia</span>
+              <span>{language === 'ar' ? 'إحداثيات الموقع: حي بولي، أديس أبابا، إثيوبيا' : t('cont.locationCoord')}</span>
             </div>
-            <span>• Direct transport arrangements available for foreign buyer groups</span>
+            <span>{t('cont.transportArrangements')}</span>
           </div>
         </motion.div>
       </section>

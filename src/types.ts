@@ -7,6 +7,7 @@ export interface CoffeeVariety {
   body: string;
   notes: string[];
   characteristic: string;
+  image?: string;
 }
 
 export interface MarketSegment {

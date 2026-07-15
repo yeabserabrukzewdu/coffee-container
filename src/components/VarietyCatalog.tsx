@@ -3,6 +3,7 @@ import { COFFEE_VARIETIES } from '../data';
 import { Search, SlidersHorizontal, ArrowRight, ShieldAlert, Beaker, ShieldCheck, LayoutGrid, List, Columns2, Award, Coffee } from 'lucide-react';
 import { CoffeeVariety } from '../types';
 import { motion, AnimatePresence } from 'motion/react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface VarietyCatalogProps {
   onSelectVarietyForQuote: (varietyId: string) => void;
@@ -10,10 +11,11 @@ interface VarietyCatalogProps {
 }
 
 export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }: VarietyCatalogProps) {
+  const { t, language } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [selectedVariety, setSelectedVariety] = useState<CoffeeVariety | null>(COFFEE_VARIETIES[0]);
-  const [layoutMode, setLayoutMode] = useState<'split' | 'bento' | 'tableau'>('split');
+  const [layoutMode, setLayoutMode] = useState<'bento' | 'tableau'>('bento');
 
   // Respond to select-variety event dispatched from footer variety links
   useEffect(() => {
@@ -76,7 +78,7 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
           transition={{ duration: 1.5 }}
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ 
-            backgroundImage: "url('./21.webp')",
+            backgroundImage: "url('/41.webp')",
           }}
         />
         {/* Dark Vignette overlay matching the brand's premium feeling */}
@@ -90,7 +92,7 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-xs sm:text-sm font-sans font-extrabold tracking-[0.4em] text-[#e06666] uppercase block"
           >
-            TASTE & TERROIR
+            {t('var.taste')}
           </motion.span>
           <motion.h1 
             initial={{ opacity: 0, y: 30 }}
@@ -98,7 +100,7 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
             transition={{ duration: 1, delay: 0.4 }}
             className="font-display font-light text-4xl sm:text-6xl md:text-7xl text-white tracking-wide italic"
           >
-            The Regional Varieties
+            {t('var.title')}
           </motion.h1>
           <motion.div 
             initial={{ width: 0 }}
@@ -118,7 +120,7 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
           transition={{ duration: 0.8 }}
           className="text-[#c22d2d] font-sans text-xs sm:text-sm tracking-[0.4em] sm:tracking-[0.5em] uppercase font-extrabold"
         >
-          Sourcing Catalog: Regional Varieties
+          {t('var.header')}
         </motion.h2>
         
         <motion.p 
@@ -126,11 +128,9 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 1, delay: 0.1 }}
-          className="font-serif font-light text-base sm:text-lg md:text-xl text-coffee-900/90 leading-relaxed max-w-3xl mx-auto"
+          className="font-serif font-light text-base sm:text-lg md:text-xl text-coffee-900/90 leading-relaxed max-w-3xl mx-auto whitespace-pre-line"
         >
-          Each bean reflects the unique soil, elevation, microclimate, and meticulous craftsmanship of 
-          Ethiopia’s celebrated coffee-growing regions. Explore our 9 world-renowned single-origin varieties, 
-          cupped and sorted for absolute consistency.
+          {t('var.intro')}
         </motion.p>
       </section>
 
@@ -143,7 +143,7 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
           transition={{ duration: 1.5 }}
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ 
-            backgroundImage: "url('./9.webp')",
+            backgroundImage: "url('/42.webp')",
           }}
         />
         <div className="absolute inset-0 bg-black/30" />
@@ -158,7 +158,7 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
               transition={{ duration: 1 }}
               className="font-serif font-light text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white leading-relaxed max-w-4xl mx-auto"
             >
-              Sun-dried on traditional African raised beds to lock in natural sweetness.
+              {language === 'ar' ? 'يُجفف في الشمس على أسرّة أفريقية تقليدية مرتفعة للحفاظ على الحلاوة الطبيعية.' : 'Sun-dried on traditional African raised beds to lock in natural sweetness.'}
             </motion.p>
           </div>
         </div>
@@ -171,30 +171,16 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-coffee-100 pb-8 mb-8 gap-4">
           <div className="text-left">
             <h3 className="font-serif font-light text-2xl sm:text-3xl text-coffee-950">
-              Our Sourcing Portfolio
+              {language === 'ar' ? 'حقيبة التوريد الخاصة بنا' : 'Our Sourcing Portfolio'}
             </h3>
             <p className="text-xs text-coffee-500 font-light mt-1">
-              Showing {filteredVarieties.length} of {COFFEE_VARIETIES.length} single-origin varieties
+              {language === 'ar' 
+                ? `عرض ${filteredVarieties.length} من أصل ${COFFEE_VARIETIES.length} من الأصناف ذات المنشأ الواحد` 
+                : `Showing ${filteredVarieties.length} of ${COFFEE_VARIETIES.length} single-origin varieties`}
             </p>
           </div>
           
           <div className="flex flex-wrap items-center gap-1.5 bg-coffee-50 p-1 rounded-md border border-coffee-100">
-            <button
-              onClick={() => {
-                setLayoutMode('split');
-                if (filteredVarieties.length > 0 && !selectedVariety) {
-                  setSelectedVariety(filteredVarieties[0]);
-                }
-              }}
-              className={`px-3 py-2 rounded-sm text-xs font-sans font-bold uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer ${
-                layoutMode === 'split'
-                  ? 'bg-white text-coffee-950 shadow-sm'
-                  : 'text-coffee-600 hover:text-coffee-900'
-              }`}
-            >
-              <Columns2 className="w-3.5 h-3.5" />
-              Interactive Deck
-            </button>
             <button
               onClick={() => setLayoutMode('bento')}
               className={`px-3 py-2 rounded-sm text-xs font-sans font-bold uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer ${
@@ -204,7 +190,7 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
               }`}
             >
               <LayoutGrid className="w-3.5 h-3.5" />
-              Bento Board
+              {language === 'ar' ? 'لوحة بينتو' : 'Bento Board'}
             </button>
             <button
               onClick={() => setLayoutMode('tableau')}
@@ -215,7 +201,7 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
               }`}
             >
               <List className="w-3.5 h-3.5" />
-              Tableau Lookup
+              {language === 'ar' ? 'البحث في الجدول' : 'Tableau Lookup'}
             </button>
           </div>
         </div>
@@ -228,7 +214,7 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-coffee-400" />
               <input
                 type="text"
-                placeholder="Search varieties (e.g. Yirgacheffe, floral, dark chocolate)..."
+                placeholder={language === 'ar' ? 'ابحث عن الأصناف (مثل ييرغاشيفي، زهرية، شوكولاتة داكنة)...' : 'Search varieties (e.g. Yirgacheffe, floral, dark chocolate)...'}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-11 pr-4 py-3 bg-white border border-coffee-200 focus:border-leaf-400 rounded-sm text-sm placeholder-coffee-400 focus:outline-none transition-colors"
@@ -241,7 +227,7 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
                 onClick={() => setSelectedTag(null)}
                 className="px-4 py-3 bg-leaf-50 text-leaf-800 border border-leaf-100 rounded-sm text-xs font-semibold hover:bg-leaf-100 transition-colors shrink-0 cursor-pointer"
               >
-                Clear Tag Filter: {selectedTag}
+                {language === 'ar' ? 'مسح تصفية العلامة: ' : 'Clear Tag Filter: '}{selectedTag}
               </button>
             )}
           </div>
@@ -249,7 +235,7 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
           {/* Quick tags list */}
           <div className="flex flex-wrap gap-2 items-center text-left">
             <span className="text-xs text-coffee-500 font-medium mr-2 flex items-center gap-1">
-              <SlidersHorizontal className="w-3 h-3" /> Filter by Sensory Note:
+              <SlidersHorizontal className="w-3 h-3" /> {language === 'ar' ? 'تصفية حسب النكهات العطرية:' : 'Filter by Sensory Note:'}
             </span>
             <button
               onClick={() => setSelectedTag(null)}
@@ -259,7 +245,7 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
                   : 'bg-white text-coffee-700 border border-coffee-100 hover:bg-coffee-50'
               }`}
             >
-              All Notes
+              {language === 'ar' ? 'كل النكهات' : 'All Notes'}
             </button>
             {allTags.map((tag) => (
               <button
@@ -288,184 +274,8 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
               className="bg-white border border-coffee-100 rounded-sm p-12 text-center text-coffee-500 space-y-2"
             >
               <ShieldAlert className="w-10 h-10 text-coffee-400 mx-auto" />
-              <p className="font-medium text-coffee-800">No varieties match your filter criteria.</p>
-              <p className="text-xs font-light">Try typing another search term or clearing the active filters.</p>
-            </motion.div>
-          ) : layoutMode === 'split' ? (
-            /* =========================================================================
-               1. INTERACTIVE SPLIT DECK LAYOUT
-               ========================================================================= */
-            <motion.div 
-              key="split-layout"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start"
-            >
-              
-              {/* Left Column: Variety Grid */}
-              <div className="lg:col-span-8 text-left">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  {filteredVarieties.map((variety, idx) => {
-                    const isSelected = selectedVariety?.id === variety.id;
-                    return (
-                      <motion.button
-                        key={variety.id}
-                        id={`variety-card-${variety.id}`}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: Math.min(idx * 0.05, 0.3) }}
-                        whileHover={{ y: -4, boxShadow: "0 10px 25px -5px rgba(0,0,0,0.05)" }}
-                        onClick={() => setSelectedVariety(variety)}
-                        className={`w-full text-left bg-white border rounded-sm p-6 flex flex-col justify-between h-56 transition-colors relative overflow-hidden group focus:outline-none cursor-pointer ${
-                          isSelected
-                            ? 'border-leaf-500 bg-leaf-50/10 ring-2 ring-leaf-500/20'
-                            : 'border-coffee-100 hover:border-coffee-300'
-                        }`}
-                      >
-                        {/* Corner Tag effect */}
-                        <div className="absolute top-0 right-0 w-24 h-24 bg-linear-to-bl from-coffee-100/40 to-transparent -z-10 group-hover:from-leaf-100/30 transition-colors" />
-
-                        <div className="space-y-3">
-                          <div className="flex justify-between items-start">
-                            <h3 className="font-serif font-light text-2xl text-coffee-950">
-                              {variety.name}
-                            </h3>
-                            <span className="text-[10px] font-mono uppercase tracking-wider text-leaf-700 bg-leaf-50 border border-leaf-100/50 px-2 py-0.5 rounded-full font-semibold">
-                              {variety.characteristic}
-                            </span>
-                          </div>
-                          <p className="font-serif text-xs text-coffee-800 leading-relaxed font-light line-clamp-3">
-                            {variety.description}
-                          </p>
-                        </div>
-
-                        <div className="flex justify-between items-center pt-3 border-t border-coffee-100">
-                          <div className="flex gap-1.5">
-                            {variety.notes.slice(0, 3).map((note) => (
-                              <span
-                                key={note}
-                                className="text-[10px] bg-coffee-100/60 text-coffee-800 px-2.5 py-0.5 rounded-md font-sans font-semibold uppercase tracking-wider"
-                              >
-                                {note}
-                              </span>
-                            ))}
-                          </div>
-                          <span className="text-xs font-semibold text-leaf-600 group-hover:text-leaf-800 flex items-center gap-1 shrink-0 uppercase tracking-wider text-[10px]">
-                            View Profile
-                            <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
-                          </span>
-                        </div>
-                      </motion.button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Right Column: Dynamic Sensory Profile Card */}
-              <div className="lg:col-span-4 lg:sticky lg:top-24">
-                {selectedVariety ? (
-                  <motion.div 
-                    key={selectedVariety.id}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ type: "spring", damping: 20, stiffness: 100 }}
-                    className="bg-[#442c33] text-white rounded-sm p-8 space-y-8 text-left shadow-xl relative overflow-hidden"
-                  >
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center">
-                        <span className="text-xs font-sans font-bold tracking-widest text-[#e06666] uppercase">
-                          Origin Profile
-                        </span>
-                        <Beaker className="w-5 h-5 text-red-300 animate-pulse" />
-                      </div>
-                      <h3 className="font-serif font-light text-3xl tracking-tight">
-                        {selectedVariety.name}
-                      </h3>
-                      <p className="font-serif text-xs text-coffee-100 leading-relaxed font-light">
-                        {selectedVariety.description}
-                      </p>
-                    </div>
-
-                    {/* Dynamic Sensory Attributes */}
-                    <div className="space-y-4 bg-black/20 p-6 rounded-sm border border-white/5">
-                      <h4 className="font-sans font-extrabold text-xs uppercase tracking-wider text-red-300">
-                        Sensory Blueprint
-                      </h4>
-
-                      <div className="space-y-3 pt-2 font-serif">
-                        <div>
-                          <div className="flex justify-between text-xs mb-1 text-coffee-100 font-sans font-bold uppercase tracking-wider text-[9px]">
-                            <span>Aroma Strength</span>
-                            <span className="text-red-300 font-extrabold">Premium</span>
-                          </div>
-                          <p className="text-xs text-coffee-200 italic">{selectedVariety.aroma}</p>
-                        </div>
-
-                        <div className="h-[1px] bg-white/5" />
-
-                        <div>
-                          <div className="flex justify-between text-xs mb-1 text-coffee-100 font-sans font-bold uppercase tracking-wider text-[9px]">
-                            <span>Acidity / Brightness</span>
-                            <span className="text-red-300 font-extrabold">High Character</span>
-                          </div>
-                          <p className="text-xs text-coffee-200 italic">{selectedVariety.acidity}</p>
-                        </div>
-
-                        <div className="h-[1px] bg-white/5" />
-
-                        <div>
-                          <div className="flex justify-between text-xs mb-1 text-coffee-100 font-sans font-bold uppercase tracking-wider text-[9px]">
-                            <span>Body & Texture</span>
-                            <span className="text-red-300 font-extrabold">Exceptional</span>
-                          </div>
-                          <p className="text-xs text-coffee-200 italic">{selectedVariety.body}</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Tag Highlights */}
-                    <div className="space-y-3">
-                      <h4 className="text-xs font-sans font-extrabold uppercase tracking-wider text-coffee-300">
-                        Primary Cupping Notes
-                      </h4>
-                      <div className="flex flex-wrap gap-1.5">
-                        {selectedVariety.notes.map((note) => (
-                          <span
-                            key={note}
-                            className="text-[10px] font-sans font-semibold uppercase tracking-wider bg-white/10 hover:bg-white/15 border border-white/10 px-3 py-1.5 rounded-sm transition-colors"
-                          >
-                            {note}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* B2B Request samples Action */}
-                    <div className="pt-4 space-y-3">
-                      <motion.button
-                        id={`cta-request-sample-${selectedVariety.id}`}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => onSelectVarietyForQuote(selectedVariety.id)}
-                        className="w-full py-4 px-6 bg-[#c22d2d] hover:bg-[#a12323] active:bg-[#851d1d] text-white font-sans text-xs font-extrabold tracking-wider uppercase rounded-sm text-center shadow-md transition-all flex items-center justify-center gap-2 group focus:outline-none cursor-pointer"
-                      >
-                        Request B2B Sample
-                        <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-                      </motion.button>
-                      <p className="text-[9px] text-coffee-300 text-center font-mono uppercase tracking-wide">
-                        Available for Roasters & Distributors Worldwide
-                      </p>
-                    </div>
-                  </motion.div>
-                ) : (
-                  <div className="bg-coffee-100 border border-coffee-200 rounded-sm p-8 text-center text-coffee-500 h-96 flex items-center justify-center">
-                    <p className="text-sm font-serif font-light">Select a variety to inspect its full sensory cup profile.</p>
-                  </div>
-                )}
-              </div>
+              <p className="font-medium text-coffee-800">{language === 'ar' ? 'لا توجد أصناف تتطابق مع معايير التصفية الخاصة بك.' : 'No varieties match your filter criteria.'}</p>
+              <p className="text-xs font-light">{language === 'ar' ? 'حاول كتابة مصطلح بحث آخر أو مسح عوامل التصفية النشطة.' : 'Try typing another search term or clearing the active filters.'}</p>
             </motion.div>
           ) : layoutMode === 'bento' ? (
             /* =========================================================================
@@ -520,13 +330,27 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
 
                     {/* Header / Meta */}
                     <div className="space-y-4">
+                      {/* Coffee Type Image inside Bento */}
+                      {variety.image && (
+                        <div className="aspect-[21/10] w-full overflow-hidden rounded-xs bg-coffee-900 border border-white/5 relative mb-4">
+                          <img 
+                            src={variety.image} 
+                            alt={variety.name} 
+                            className="w-full h-full object-cover filter brightness-[0.95] group-hover:scale-105 transition-transform duration-700"
+                            referrerPolicy="no-referrer"
+                          />
+                        </div>
+                      )}
+
                       <div className="flex justify-between items-center">
                         <div className="flex items-center gap-2">
                           {isHero && <Award className="w-4 h-4 text-red-300" />}
                           <span className={`text-[10px] font-mono uppercase tracking-[0.2em] font-extrabold ${
                             isHero ? 'text-red-300' : 'text-leaf-700 bg-leaf-50 px-2.5 py-0.5 rounded-sm'
                           }`}>
-                            {isHero ? 'PRESTIGIOUS ORIGIN' : 'REGIONAL CLASSIC'}
+                            {isHero 
+                              ? (language === 'ar' ? 'منشأ مرموق فاخر' : 'PRESTIGIOUS ORIGIN') 
+                              : (language === 'ar' ? 'كلاسيكي إقليمي' : 'REGIONAL CLASSIC')}
                           </span>
                         </div>
                         <span className={`text-[10px] font-semibold uppercase tracking-wider ${
@@ -559,7 +383,7 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
                       <div className="space-y-4 font-sans text-xs">
                         <div>
                           <div className="flex justify-between mb-1 font-bold uppercase tracking-wider text-[9px] opacity-80">
-                            <span>Aroma Profile</span>
+                            <span>{language === 'ar' ? 'الملف العطري' : 'Aroma Profile'}</span>
                             <span className={isHero ? 'text-red-300' : 'text-leaf-700'}>{variety.aroma}</span>
                           </div>
                           <div className="w-full h-1 bg-black/10 rounded-full overflow-hidden">
@@ -575,7 +399,7 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
 
                         <div>
                           <div className="flex justify-between mb-1 font-bold uppercase tracking-wider text-[9px] opacity-80">
-                            <span>Acidity Level</span>
+                            <span>{language === 'ar' ? 'درجة الحموضة' : 'Acidity Level'}</span>
                             <span className={isHero ? 'text-red-300' : 'text-leaf-700'}>{variety.acidity}</span>
                           </div>
                           <div className="w-full h-1 bg-black/10 rounded-full overflow-hidden">
@@ -591,7 +415,7 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
 
                         <div>
                           <div className="flex justify-between mb-1 font-bold uppercase tracking-wider text-[9px] opacity-80">
-                            <span>Body & Texture</span>
+                            <span>{language === 'ar' ? 'القوام والملمس' : 'Body & Texture'}</span>
                             <span className={isHero ? 'text-red-300' : 'text-leaf-700'}>{variety.body}</span>
                           </div>
                           <div className="w-full h-1 bg-black/10 rounded-full overflow-hidden">
@@ -635,7 +459,7 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
                             : 'bg-coffee-950 hover:bg-coffee-900 text-white'
                         }`}
                       >
-                        Request B2B Sample
+                        {language === 'ar' ? 'طلب عينة للشركات B2B' : 'Request B2B Sample'}
                         <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
                       </motion.button>
                     </div>
@@ -657,11 +481,11 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
             >
               {/* Header row for large screens */}
               <div className="hidden lg:grid lg:grid-cols-12 gap-4 px-8 py-5 bg-coffee-50 border-b border-coffee-100 font-sans font-bold text-xs uppercase tracking-wider text-coffee-600 text-left">
-                <div className="col-span-3">Variety & Terroir</div>
-                <div className="col-span-2">Aroma Profile</div>
-                <div className="col-span-2">Acidity character</div>
-                <div className="col-span-2">Body & Mouthfeel</div>
-                <div className="col-span-3 text-right">Sourcing Connection</div>
+                <div className="col-span-3">{language === 'ar' ? 'الصنف والبيئة الجغرافية' : 'Variety & Terroir'}</div>
+                <div className="col-span-2">{language === 'ar' ? 'الملف العطري ورائحته' : 'Aroma Profile'}</div>
+                <div className="col-span-2">{language === 'ar' ? 'طابع الحموضة' : 'Acidity character'}</div>
+                <div className="col-span-2">{language === 'ar' ? 'القوام والمذاق في الفم' : 'Body & Mouthfeel'}</div>
+                <div className="col-span-3 text-right">{language === 'ar' ? 'ارتباط التوريد' : 'Sourcing Connection'}</div>
               </div>
 
               {/* List Rows */}
@@ -676,25 +500,37 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
                     className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center px-6 sm:px-8 py-8 lg:py-6 transition-colors hover:bg-coffee-50/35"
                   >
                     {/* Name and description column */}
-                    <div className="lg:col-span-3 space-y-1.5">
-                      <div className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 bg-[#c22d2d] rounded-full shrink-0" />
-                        <h4 className="font-serif font-semibold text-xl text-coffee-950">
-                          {variety.name}
-                        </h4>
+                    <div className="lg:col-span-3 space-y-1.5 flex gap-4 items-center">
+                      {variety.image && (
+                        <div className="w-16 h-16 rounded-sm overflow-hidden bg-coffee-100 shrink-0 hidden sm:block border border-coffee-200">
+                          <img 
+                            src={variety.image} 
+                            alt={variety.name} 
+                            className="w-full h-full object-cover"
+                            referrerPolicy="no-referrer"
+                          />
+                        </div>
+                      )}
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 bg-[#c22d2d] rounded-full shrink-0" />
+                          <h4 className="font-serif font-semibold text-xl text-coffee-950">
+                            {variety.name}
+                          </h4>
+                        </div>
+                        <p className="font-mono text-[10px] uppercase tracking-wider text-leaf-700">
+                          • {variety.characteristic}
+                        </p>
+                        <p className="font-serif text-xs text-coffee-700 font-light leading-relaxed max-w-sm lg:max-w-none pr-4">
+                          {variety.description}
+                        </p>
                       </div>
-                      <p className="font-mono text-[10px] uppercase tracking-wider text-leaf-700">
-                        • {variety.characteristic}
-                      </p>
-                      <p className="font-serif text-xs text-coffee-700 font-light leading-relaxed max-w-sm lg:max-w-none pr-4">
-                        {variety.description}
-                      </p>
                     </div>
 
                     {/* Aroma column */}
                     <div className="lg:col-span-2 space-y-1">
                       <span className="block lg:hidden text-[9px] font-sans font-bold uppercase tracking-wider text-coffee-400 mt-2">
-                        Aroma
+                        {language === 'ar' ? 'الملف العطري ورائحته' : 'Aroma Profile'}
                       </span>
                       <p className="font-serif text-xs text-coffee-900 font-light">
                         {variety.aroma}
@@ -704,7 +540,7 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
                     {/* Acidity column */}
                     <div className="lg:col-span-2 space-y-1">
                       <span className="block lg:hidden text-[9px] font-sans font-bold uppercase tracking-wider text-coffee-400 mt-2">
-                        Acidity
+                        {language === 'ar' ? 'طابع الحموضة' : 'Acidity character'}
                       </span>
                       <p className="font-serif text-xs text-coffee-900 font-light">
                         {variety.acidity}
@@ -714,7 +550,7 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
                     {/* Body column */}
                     <div className="lg:col-span-2 space-y-1">
                       <span className="block lg:hidden text-[9px] font-sans font-bold uppercase tracking-wider text-coffee-400 mt-2">
-                        Body & Texture
+                        {language === 'ar' ? 'القوام والمذاق في الفم' : 'Body & Mouthfeel'}
                       </span>
                       <p className="font-serif text-xs text-coffee-900 font-light">
                         {variety.body}
@@ -741,7 +577,7 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
                         onClick={() => onSelectVarietyForQuote(variety.id)}
                         className="w-full sm:w-auto py-2.5 px-5 bg-[#c22d2d] hover:bg-[#a12323] active:bg-[#851d1d] text-white font-sans text-xs font-bold tracking-wider uppercase rounded-sm shadow-xs transition-colors text-center flex items-center justify-center gap-1.5 cursor-pointer"
                       >
-                        <span>Request Sample</span>
+                        <span>{language === 'ar' ? 'طلب عينة' : 'Request Sample'}</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </motion.button>
                     </div>
@@ -765,7 +601,7 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
             className="relative min-h-[400px] md:min-h-[500px]"
           >
             <img 
-              src="./7.webp" 
+              src="/43.webp" 
               alt="Meticulous coffee tasting and cupping evaluation"
               className="absolute inset-0 w-full h-full object-cover filter grayscale contrast-125"
             />
@@ -780,20 +616,20 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
             className="bg-[#442c33] p-10 sm:p-16 lg:p-20 flex flex-col justify-center text-left text-white space-y-6"
           >
             <span className="text-xs font-mono text-red-300 uppercase tracking-[0.25em] font-extrabold">
-              Q-GRADER GUARANTEE
+              {language === 'ar' ? 'ضمان مقيمي الجودة المعتمدين' : 'Q-GRADER GUARANTEE'}
             </span>
             <h3 className="font-serif font-light text-3xl sm:text-4xl lg:text-5xl text-white leading-tight">
-              Quality Sourced Direct From Origin
+              {language === 'ar' ? 'جودة مروية مباشرة من المنشأ' : 'Quality Sourced Direct From Origin'}
             </h3>
             
             <p className="font-serif font-light text-sm sm:text-base md:text-lg text-white/90 leading-relaxed">
-              At Coffee Container, quality is a continuous commitment that follows every stage of the supply chain—from 
-              farm selection to sample analysis and custom testing. Each batch is meticulously evaluated by certified Q-graders 
-              to ensure it meets strict international export standards and preserves genuine origin identity.
+              {language === 'ar' 
+                ? 'في كوفي كونتينر، الجودة هي التزام مستمر يرافق كل مرحلة من مراحل سلسلة التوريد - بدءاً من اختيار المزرعة إلى تحليل العينات واختبارها خصيصاً. يتم تقييم كل دفعة بدقة من قبل مقيمي جودة معتمدين لضمان تلبيتها لمعايير التصدير الدولية الصارمة والحفاظ على هوية المنشأ الحقيقية.' 
+                : 'At Coffee Container, quality is a continuous commitment that follows every stage of the supply chain—from farm selection to sample analysis and custom testing. Each batch is meticulously evaluated by certified Q-graders to ensure it meets strict international export standards and preserves genuine origin identity.'}
             </p>
             <div className="inline-flex self-start items-center gap-1.5 text-xs text-red-300 font-semibold bg-white/5 border border-white/10 px-3 py-1.5 rounded-sm">
               <ShieldCheck className="w-3.5 h-3.5" />
-              <span>SCA Score 85+ Specialty Grade Lots</span>
+              <span>{language === 'ar' ? 'حصص درجات متخصصة بتقييم SCA 85+' : 'SCA Score 85+ Specialty Grade Lots'}</span>
             </div>
           </motion.div>
         </div>
@@ -814,7 +650,7 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
           >
             <div 
               className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-              style={{ backgroundImage: "url('./1.webp')" }}
+              style={{ backgroundImage: "url('/44.webp')" }}
             />
             {/* Elegant gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent transition-opacity group-hover:opacity-95" />
@@ -822,13 +658,13 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
             {/* Card Content */}
             <div className="absolute inset-x-8 bottom-8 text-white space-y-2 flex flex-col items-start">
               <span className="text-[10px] font-sans font-bold tracking-[0.25em] text-white/70 uppercase">
-                HERITAGE & ALIGNMENT
+                {language === 'ar' ? 'التراث والترابط السلس' : 'HERITAGE & ALIGNMENT'}
               </span>
               <h4 className="font-serif font-light text-3xl text-white group-hover:text-leaf-300 transition-colors">
-                Our Story
+                {t('nav.story')}
               </h4>
               <span className="inline-flex items-center gap-1.5 text-[10px] font-sans font-bold tracking-[0.2em] text-white uppercase mt-2 border-b border-white/30 pb-0.5 group-hover:border-leaf-300 group-hover:text-leaf-300 transition-all">
-                EXPLORE NOW <ArrowRight className="w-3 h-3" />
+                {language === 'ar' ? 'اكتشف الآن' : 'EXPLORE NOW'} <ArrowRight className="w-3 h-3" />
               </span>
             </div>
           </motion.button>
@@ -845,7 +681,7 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
           >
             <div 
               className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-              style={{ backgroundImage: "url('./3.webp')" }}
+              style={{ backgroundImage: "url('/45.webp')" }}
             />
             {/* Elegant gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent transition-opacity group-hover:opacity-95" />
@@ -853,13 +689,13 @@ export default function VarietyCatalog({ onSelectVarietyForQuote, setActiveTab }
             {/* Card Content */}
             <div className="absolute inset-x-8 bottom-8 text-white space-y-2 flex flex-col items-start">
               <span className="text-[10px] font-sans font-bold tracking-[0.25em] text-white/70 uppercase">
-                ETHICS & VISION
+                {language === 'ar' ? 'الأخلاقيات والرؤية المستدامة' : 'ETHICS & VISION'}
               </span>
               <h4 className="font-serif font-light text-3xl text-white group-hover:text-leaf-300 transition-colors">
-                Sustainability
+                {t('nav.sustainability')}
               </h4>
               <span className="inline-flex items-center gap-1.5 text-[10px] font-sans font-bold tracking-[0.2em] text-white uppercase mt-2 border-b border-white/30 pb-0.5 group-hover:border-leaf-300 group-hover:text-leaf-300 transition-all">
-                EXPLORE NOW <ArrowRight className="w-3 h-3" />
+                {language === 'ar' ? 'اكتشف الآن' : 'EXPLORE NOW'} <ArrowRight className="w-3 h-3" />
               </span>
             </div>
           </motion.button>

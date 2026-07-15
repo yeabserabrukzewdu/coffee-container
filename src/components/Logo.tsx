@@ -29,7 +29,7 @@ export default function Logo({ className = '', variant = 'full' }: LogoProps) {
         viewBox="0 0 100 100"
         className={`inline-block ${className}`}
         fill="none"
-        xmlns="./logo.png"
+        xmlns="http://www.w3.org/2000/svg"
       >
         {/* Isometric / 3D Structured Shipping Container representation */}
         {/* Top Lid / Roof */}
@@ -100,7 +100,7 @@ export default function Logo({ className = '', variant = 'full' }: LogoProps) {
           viewBox="0 0 100 100"
           className="w-full h-full"
           fill="none"
-          xmlns="./logo.png"
+          xmlns="http://www.w3.org/2000/svg"
         >
           {/* Isometric Shipping Container */}
           <path

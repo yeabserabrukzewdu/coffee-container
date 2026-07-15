@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowDown, Flame, Globe, Heart, ShieldCheck, Star, Camera, Compass, Send, CheckCircle, MapPin, ChevronLeft, ChevronRight, Play, Pause, Coffee, Trees } from 'lucide-react';
-import { GENERAL_INFO, COFFEE_VARIETIES } from '../data';
+import { useLanguage } from '../contexts/LanguageContext';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface HeroProps {
@@ -17,18 +17,20 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
 
   // Unsplash high-resolution images mapping for coffee varieties
   const VARIETY_IMAGES: Record<string, string> = {
-    yirgacheffee: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1200&q=80',
-    gesha: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80',
-    sidamo: 'https://images.unsplash.com/photo-1507133750040-4a8f57021571?auto=format&fit=crop&w=1200&q=80',
-    limmu: 'https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=1200&q=80',
-    guji: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=80',
-    harrar: 'https://images.unsplash.com/photo-1518085033897-db9b7130e619?auto=format&fit=crop&w=1200&q=80',
-    teppi: 'https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1200&q=80',
-    djimmah: 'https://images.unsplash.com/photo-1506619210596-381598452a14?auto=format&fit=crop&w=1200&q=80',
-    nekemte: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=1200&q=80'
+    yirgacheffee: '/1.webp',
+    gesha: '/2.jpg',
+    sidamo: '/3.webp',
+    limmu: '/4.webp',
+    guji: '/5.webp',
+    harrar: '/6.webp',
+    teppi: '/7.webp',
+    djimmah: '/8.webp',
+    nekemte: '/9.webp'
   };
 
-  const SHOWCASE_VARIETIES = COFFEE_VARIETIES.filter(v => 
+  const { t, varieties, language } = useLanguage();
+
+  const SHOWCASE_VARIETIES = varieties.filter(v => 
     ['yirgacheffee', 'gesha', 'sidamo', 'guji', 'harrar'].includes(v.id)
   );
 
@@ -108,7 +110,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
       {/* 1. Immersive Full-Screen Editorial Hero Header */}
       <section id="hero-immersive" className="relative h-screen w-full overflow-hidden flex items-center justify-center">
         {/* Background Image of high-altitude mist forest */}
-  <div className="absolute inset-0">
+        <div className="absolute inset-0">
   <video
     autoPlay
     muted
@@ -134,17 +136,17 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-xs sm:text-sm font-sans font-extrabold tracking-[0.4em] text-leaf-300 uppercase block"
           >
-            {GENERAL_INFO.companyName}
+            COFFEE CONTAINER
           </motion.span>
           
           <motion.h1 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.4 }}
-            className="font-display font-light text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-white tracking-wide max-w-5xl mx-auto leading-tight italic"
+            className="font-display font-light text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-white tracking-wide italic"
           >
-            Experience the Most <br />
-            <span className="font-normal not-italic font-display block mt-3 text-3xl sm:text-5xl md:text-6xl lg:text-7xl">Celebrated Coffee in the World</span>
+            {t('hero.title')} <br />
+            <span className="font-normal not-italic font-display block mt-3 text-3xl sm:text-5xl md:text-6xl lg:text-7xl">{t('hero.subtitle')}</span>
           </motion.h1>
 
           <motion.div 
@@ -160,7 +162,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
             transition={{ duration: 1, delay: 0.8 }}
             className="text-coffee-100/90 text-sm sm:text-base md:text-lg max-w-2xl mx-auto font-sans font-light tracking-wide leading-relaxed"
           >
-            Connecting Ethiopia's finest direct harvests with global roasters through structured container logistics.
+            {t('hero.description')}
           </motion.p>
 
           <motion.div 
@@ -175,7 +177,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
               onClick={() => navigateTo('varieties')}
               className="px-8 py-3.5 bg-leaf-600 hover:bg-leaf-500 text-white font-semibold text-xs sm:text-sm uppercase tracking-widest rounded-none transition-colors duration-300 focus:outline-none cursor-pointer"
             >
-              Explore Catalog
+              {t('hero.explore')}
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -183,7 +185,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
               onClick={() => navigateTo('export')}
               className="px-8 py-3.5 bg-[#c22d2d] hover:bg-[#a12323] text-white font-semibold text-xs sm:text-sm uppercase tracking-widest rounded-none transition-colors duration-300 focus:outline-none cursor-pointer"
             >
-              Request Quote
+              {t('hero.quote')}
             </motion.button>
           </motion.div>
         </div>
@@ -248,23 +250,22 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
             className="lg:col-span-6 text-left space-y-6"
           >
             <span className="text-leaf-600 font-sans font-semibold text-xs tracking-widest uppercase block">
-              OUR STORY
+              {t('nav.story')}
             </span>
             <h2 className="font-display font-light text-3xl sm:text-5xl text-coffee-950 leading-tight">
-              A Labor of Love in Pursuit <br className="hidden sm:inline" />
-              of the Best Coffee
+              {t('hero.storyTitle')}
             </h2>
-            <p className="text-coffee-800 text-sm sm:text-base leading-relaxed font-light">
-              The high-altitude forests and sun-drenched hills of Ethiopia are a jewel of unfathomable natural beauty. It is in this one-of-a-kind landscape that Coffee Container builds direct-sourcing container networks.
+            <p className="text-coffee-800 text-sm sm:text-base leading-relaxed font-light whitespace-pre-line">
+              {t('hero.storyText1')}
               <br /><br />
-              This long journey is our labor of love. We are extremely proud to be supplying traceable coffees that are as awe-inspiring as our surroundings, honoring our generational traditions and connecting local farmers directly with international roasters.
+              {t('hero.storyText2')}
             </p>
             <motion.button
               whileHover={{ x: 6 }}
               onClick={() => navigateTo('story')}
               className="group inline-flex items-center gap-2 text-xs font-sans font-semibold text-leaf-700 tracking-widest uppercase hover:text-leaf-800 transition-colors pt-2 cursor-pointer"
             >
-              READ MORE <span className="group-hover:translate-x-1 transition-transform">&gt;</span>
+              {t('hero.readMore')} <span className="group-hover:translate-x-1 transition-transform">&gt;</span>
             </motion.button>
           </motion.div>
         </div>
@@ -284,7 +285,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
               className="lg:col-span-6 order-last lg:order-first"
             >
               <div className="aspect-[4/3] w-full overflow-hidden rounded-xs border border-coffee-100 shadow-md relative">
-                <img 
+              <img 
                   src="./3.webp" 
                   alt="Aerial forest canopy of Ethiopia" 
                   className="w-full h-full object-cover"
@@ -309,12 +310,10 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
               </div>
 
               <h2 className="font-display font-light text-4xl sm:text-5xl text-coffee-950">
-                Forest of Dreams
+                {t('hero.forestTitle')}
               </h2>
-              <p className="text-coffee-800 text-sm sm:text-base leading-relaxed font-light">
-                Discover the origin of wild specialty coffees. Working within the birthplace of Arabica, our dream is to protect these ancient forest landscapes while making single-origin lots accessible worldwide.
-                <br /><br />
-                But the Ethiopian forests taught us to think bigger. Coffee Container is the culmination of these dreams—establishing a structured logistics system that supports smallholder growers while delivering immaculate quality consistency.
+              <p className="text-coffee-800 text-sm sm:text-base leading-relaxed font-light whitespace-pre-line">
+                {t('hero.forestText')}
               </p>
             </motion.div>
           </div>
@@ -331,10 +330,10 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
           className="text-center max-w-4xl mx-auto space-y-5"
         >
           <span className="text-[10px] font-sans font-extrabold tracking-[0.3em] text-[#c22d2d] uppercase block">
-            THE PEOPLES OF ORIGIN
+            {t('hero.peoplesTitle')}
           </span>
           <h2 className="font-display font-light text-2xl sm:text-4.5xl text-coffee-950 leading-relaxed italic max-w-3xl mx-auto">
-            "The grower families of Ethiopia are the true inhabitants and protectors of origin."
+            {t('hero.peoplesQuote')}
           </h2>
           <div className="w-16 h-[1px] bg-coffee-200 mx-auto" />
         </motion.div>
@@ -352,7 +351,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
           >
             <div className="aspect-square overflow-hidden bg-coffee-50 border border-coffee-100/50 relative">
               <img 
-                src="./4.webp" 
+                 src="./4.webp" 
                 alt="Hands holding freshly picked coffee cherries" 
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                 referrerPolicy="no-referrer"
@@ -360,8 +359,8 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
               <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-500" />
             </div>
             <div className="mt-5 space-y-1 text-center">
-              <p className="font-serif text-coffee-900 font-medium italic text-sm">Growers Cooperative</p>
-              <p className="text-[10px] font-sans font-bold text-[#c22d2d] uppercase tracking-wider">HARVESTING SPECIALTY CHERRIES</p>
+              <p className="font-serif text-coffee-900 font-medium italic text-sm">{t('hero.polaroid1')}</p>
+              <p className="text-[10px] font-sans font-bold text-[#c22d2d] uppercase tracking-wider">{t('hero.polaroid1Sub')}</p>
             </div>
           </motion.div>
 
@@ -376,7 +375,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
           >
             <div className="aspect-square overflow-hidden bg-coffee-50 border border-coffee-100/50 relative">
               <img 
-                src="./5.webp" 
+               src="./5.webp" 
                 alt="Hands sorting coffee beans" 
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                 referrerPolicy="no-referrer"
@@ -384,8 +383,8 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
               <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-500" />
             </div>
             <div className="mt-5 space-y-1 text-center">
-              <p className="font-serif text-coffee-900 font-medium italic text-sm">Washing Station Teams</p>
-              <p className="text-[10px] font-sans font-bold text-[#c22d2d] uppercase tracking-wider">RIGOROUS QUALITY SORTING</p>
+              <p className="font-serif text-coffee-900 font-medium italic text-sm">{t('hero.polaroid2')}</p>
+              <p className="text-[10px] font-sans font-bold text-[#c22d2d] uppercase tracking-wider">{t('hero.polaroid2Sub')}</p>
             </div>
           </motion.div>
 
@@ -400,7 +399,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
           >
             <div className="aspect-square overflow-hidden bg-coffee-50 border border-coffee-100/50 relative">
               <img 
-                src="./6.webp" 
+                src="/6.webp" 
                 alt="Pristine raw green coffee beans" 
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                 referrerPolicy="no-referrer"
@@ -408,8 +407,8 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
               <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-500" />
             </div>
             <div className="mt-5 space-y-1 text-center">
-              <p className="font-serif text-coffee-900 font-medium italic text-sm">Drying Beds & Traceability</p>
-              <p className="text-[10px] font-sans font-bold text-[#c22d2d] uppercase tracking-wider">EXQUISITE GREEN RESERVES</p>
+              <p className="font-serif text-coffee-900 font-medium italic text-sm">{t('hero.polaroid3')}</p>
+              <p className="text-[10px] font-sans font-bold text-[#c22d2d] uppercase tracking-wider">{t('hero.polaroid3Sub')}</p>
             </div>
           </motion.div>
         </div>
@@ -425,13 +424,13 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
           {/* Header */}
           <div className="text-center space-y-4 max-w-3xl mx-auto">
             <span className="text-leaf-600 font-sans font-extrabold text-xs tracking-[0.3em] uppercase block">
-              TASTE & TERROIR
+              {t('var.taste')}
             </span>
             <h2 className="font-display font-light text-3xl sm:text-5xl text-coffee-950 leading-tight">
-              Our Celebrated Regional Varieties
+              {t('var.title')}
             </h2>
             <p className="text-coffee-800 text-sm sm:text-base leading-relaxed font-light">
-              Ethiopia is the birthplace of Arabica coffee. Sourced at high altitudes, our specialty-grade micro-lots deliver distinct cup profiles. Explore our featured origins below.
+              {t('hero.tasteSub')}
             </p>
           </div>
 
@@ -460,7 +459,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
                 >
                   <div className="space-y-2">
                     <span className="text-[10px] font-mono font-bold text-coffee-500 uppercase tracking-widest block">
-                      FEATURED VARIETY ({currentSlide + 1} / {SHOWCASE_VARIETIES.length})
+                      {t('hero.featuredVariety')} ({currentSlide + 1} / {SHOWCASE_VARIETIES.length})
                     </span>
                     <h3 className="font-serif font-light text-3xl sm:text-4xl text-coffee-950 italic">
                       {SHOWCASE_VARIETIES[currentSlide].name}
@@ -477,15 +476,15 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
                   {/* Flavor Metrics Grid */}
                   <div className="grid grid-cols-1 gap-3 pt-4 border-t border-coffee-100">
                     <div className="flex justify-between items-center text-xs">
-                      <span className="font-sans font-bold uppercase text-coffee-500 tracking-wider">Aroma</span>
+                      <span className="font-sans font-bold uppercase text-coffee-500 tracking-wider">{t('var.aroma') || 'Aroma'}</span>
                       <span className="font-serif text-coffee-900 font-light italic">{SHOWCASE_VARIETIES[currentSlide].aroma}</span>
                     </div>
                     <div className="flex justify-between items-center text-xs">
-                      <span className="font-sans font-bold uppercase text-coffee-500 tracking-wider">Acidity</span>
+                      <span className="font-sans font-bold uppercase text-coffee-500 tracking-wider">{t('var.acidity') || 'Acidity'}</span>
                       <span className="font-serif text-coffee-900 font-light italic">{SHOWCASE_VARIETIES[currentSlide].acidity}</span>
                     </div>
                     <div className="flex justify-between items-center text-xs">
-                      <span className="font-sans font-bold uppercase text-coffee-500 tracking-wider">Body</span>
+                      <span className="font-sans font-bold uppercase text-coffee-500 tracking-wider">{t('var.body') || 'Body'}</span>
                       <span className="font-serif text-coffee-900 font-light italic">{SHOWCASE_VARIETIES[currentSlide].body}</span>
                     </div>
                   </div>
@@ -511,14 +510,14 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
                   onClick={() => navigateTo('varieties')}
                   className="group inline-flex items-center gap-1.5 text-xs font-sans font-bold text-leaf-700 tracking-widest uppercase hover:text-[#c22d2d] transition-colors cursor-pointer"
                 >
-                  FULL CATALOG <span className="group-hover:translate-x-1 transition-transform">&gt;</span>
+                  {t('hero.fullCatalog')} <span className="group-hover:translate-x-1 transition-transform">&gt;</span>
                 </motion.button>
 
                 <button
                   onClick={() => navigateTo('export')}
-                  className="bg-[#c22d2d] hover:bg-[#a02222] text-white text-[10px] font-sans font-extrabold tracking-widest uppercase px-4 py-2 transition-colors duration-250 select-none"
+                  className="bg-[#c22d2d] hover:bg-[#a02222] text-white text-[10px] font-sans font-extrabold tracking-widest uppercase px-4 py-2 transition-colors duration-250 select-none cursor-pointer"
                 >
-                  QUOTE REQUEST
+                  {t('hero.quoteRequest')}
                 </button>
               </div>
             </div>
@@ -625,20 +624,20 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
             className="lg:col-span-5 text-left space-y-6"
           >
             <span className="text-leaf-600 font-sans font-semibold text-xs tracking-widest uppercase block">
-              THE SOURCING
+              {t('hero.sourcing')}
             </span>
             <h2 className="font-display font-light text-3xl sm:text-5xl text-coffee-950 leading-tight">
-              Processed <br />With Care
+              {t('hero.processed')}
             </h2>
             <p className="text-coffee-800 text-sm sm:text-base leading-relaxed font-light">
-              We bring out the utmost quality in every single batch through meticulously controlled processing methods. Our networks utilize washed, natural, and anaerobic fermentations, dried precisely on raised African beds.
+              {t('hero.processedText')}
             </p>
             <motion.button
               whileHover={{ x: 6 }}
               onClick={() => navigateTo('varieties')}
               className="group inline-flex items-center gap-2 text-xs font-sans font-semibold text-leaf-700 tracking-widest uppercase hover:text-leaf-800 transition-colors pt-2 cursor-pointer"
             >
-              EXPLORE <span className="group-hover:translate-x-1 transition-transform">&gt;</span>
+              {t('hero.exploreBtn')} <span className="group-hover:translate-x-1 transition-transform">&gt;</span>
             </motion.button>
           </motion.div>
 
@@ -652,7 +651,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
           >
             <div className="aspect-[16/9] w-full overflow-hidden rounded-xs border border-coffee-100 shadow-md">
               <img 
-                src="./7.webp" 
+                src="/7.webp" 
                 alt="Women processing coffee beans" 
                 className="w-full h-full object-cover"
               />
@@ -672,13 +671,13 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
           >
             <div className="aspect-square w-full overflow-hidden rounded-xs border border-coffee-100 shadow-xs group-hover:border-leaf-400 group-hover:shadow-md transition-all duration-300">
               <img 
-                src="./8.webp" 
+                src="./8.webp"
                 alt="Fresh cherries" 
                 className="w-full h-full object-cover grayscale-20 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
               />
             </div>
-            <h4 className="font-display font-semibold text-coffee-950 text-base group-hover:text-leaf-700 transition-colors">1. Selected Red Cherries</h4>
-            <p className="text-xs text-coffee-700 leading-relaxed font-light">Harvested by hand only when peak sugar-density levels are reached.</p>
+            <h4 className="font-display font-semibold text-coffee-950 text-base group-hover:text-leaf-700 transition-colors">{t('hero.stage1Title')}</h4>
+            <p className="text-xs text-coffee-700 leading-relaxed font-light">{t('hero.stage1Text')}</p>
           </motion.div>
 
           <motion.div 
@@ -696,8 +695,8 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
                 className="w-full h-full object-cover grayscale-20 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
               />
             </div>
-            <h4 className="font-display font-semibold text-coffee-950 text-base group-hover:text-leaf-700 transition-colors">2. Clean Wet Processing</h4>
-            <p className="text-xs text-coffee-700 leading-relaxed font-light">De-pulped, fermented organically, and washed with high-purity natural spring waters.</p>
+            <h4 className="font-display font-semibold text-coffee-950 text-base group-hover:text-leaf-700 transition-colors">{t('hero.stage2Title')}</h4>
+            <p className="text-xs text-coffee-700 leading-relaxed font-light">{t('hero.stage2Text')}</p>
           </motion.div>
 
           <motion.div 
@@ -715,8 +714,8 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
                 className="w-full h-full object-cover grayscale-20 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
               />
             </div>
-            <h4 className="font-display font-semibold text-coffee-950 text-base group-hover:text-leaf-700 transition-colors">3. Sun-Dried Maturity</h4>
-            <p className="text-xs text-coffee-700 leading-relaxed font-light">Slow-dried on raised bamboo tables, continuously rotated for flavor uniformity.</p>
+            <h4 className="font-display font-semibold text-coffee-950 text-base group-hover:text-leaf-700 transition-colors">{t('hero.stage3Title')}</h4>
+            <p className="text-xs text-coffee-700 leading-relaxed font-light">{t('hero.stage3Text')}</p>
           </motion.div>
         </div>
       </section>
@@ -726,11 +725,11 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
         {/* Background dark forest overlay */}
         <motion.div 
           initial={{ scale: 1.15, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 1 }}
+          whileInView={{ scale: 1, opacity: 0.15 }}
           viewport={{ once: true }}
           transition={{ duration: 1.2 }}
           className="absolute inset-0 bg-cover bg-center pointer-events-none mix-blend-overlay"
-          style={{ backgroundImage: "url('./2.jpg')" }}
+          style={{ backgroundImage: "url('/21.webp')" }}
         />
         <div className="absolute inset-0 bg-linear-to-r from-coffee-950/90 via-transparent to-coffee-950/90" />
 
@@ -743,8 +742,8 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
             transition={{ duration: 0.8 }}
             className="text-center space-y-2"
           >
-            <span className="text-xs font-mono text-leaf-400 font-semibold tracking-widest uppercase">EXPLORING ORIGIN</span>
-            <h2 className="font-display font-light text-3xl sm:text-5xl">Sourcing Facts</h2>
+            <span className="text-xs font-mono text-leaf-400 font-semibold tracking-widest uppercase">{language === 'ar' ? 'استكشاف المنشأ' : 'EXPLORING ORIGIN'}</span>
+            <h2 className="font-display font-light text-3xl sm:text-5xl">{t('hero.sourcingFacts')}</h2>
           </motion.div>
 
           {/* Stats columns */}
@@ -758,7 +757,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
               className="space-y-1 cursor-pointer"
             >
               <div className="font-display font-extrabold text-3xl sm:text-4xl text-leaf-400">471</div>
-              <div className="text-xs uppercase tracking-widest text-coffee-200">HECTARES TOTAL SOURCE AREA</div>
+              <div className="text-xs uppercase tracking-widest text-coffee-200">{t('hero.hectares')}</div>
             </motion.div>
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
@@ -769,7 +768,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
               className="space-y-1 cursor-pointer"
             >
               <div className="font-display font-extrabold text-3xl sm:text-4xl text-leaf-400">341</div>
-              <div className="text-xs uppercase tracking-widest text-coffee-200">COOPERATIVES ENGAGED</div>
+              <div className="text-xs uppercase tracking-widest text-coffee-200">{t('hero.cooperatives')}</div>
             </motion.div>
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
@@ -780,7 +779,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
               className="space-y-1 cursor-pointer"
             >
               <div className="font-display font-extrabold text-3xl sm:text-4xl text-leaf-400">730,000</div>
-              <div className="text-xs uppercase tracking-widest text-coffee-200">TREES PROTECTED</div>
+              <div className="text-xs uppercase tracking-widest text-coffee-200">{t('hero.trees')}</div>
             </motion.div>
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
@@ -791,7 +790,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
               className="space-y-1 cursor-pointer"
             >
               <div className="font-display font-extrabold text-3xl sm:text-4xl text-leaf-400">27%</div>
-              <div className="text-xs uppercase tracking-widest text-coffee-200">PRESERVATION AREA</div>
+              <div className="text-xs uppercase tracking-widest text-coffee-200">{t('hero.preservation')}</div>
             </motion.div>
           </div>
 
@@ -814,7 +813,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
               >
                 <div className="aspect-[4/3] overflow-hidden bg-coffee-950/20 relative">
                   <img 
-                    src="./11.webp" 
+                    src="./11.webp"  
                     alt="Wild Forest Canopy" 
                     className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"
@@ -822,8 +821,8 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
                   <div className="absolute inset-0 bg-black/5 hover:bg-transparent transition-colors duration-300" />
                 </div>
                 <div className="mt-4 space-y-1 text-center">
-                  <p className="font-serif text-coffee-950 font-semibold italic text-sm">Regenerative Forest</p>
-                  <p className="text-[9px] font-sans font-bold text-[#c22d2d] uppercase tracking-widest">Organic shade canopy</p>
+                  <p className="font-serif text-coffee-950 font-semibold italic text-sm">{t('sust.stewardship')}</p>
+                  <p className="text-[9px] font-sans font-bold text-[#c22d2d] uppercase tracking-widest">{t('sust.organicShade')}</p>
                 </div>
               </motion.div>
 
@@ -839,7 +838,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
               >
                 <div className="aspect-[4/3] overflow-hidden bg-coffee-950/20 relative">
                   <img 
-                    src="./12.webp" 
+                    src="./12.webp"
                     alt="Ethical Hand Picked Cherries" 
                     className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"
@@ -847,8 +846,8 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
                   <div className="absolute inset-0 bg-black/5 hover:bg-transparent transition-colors duration-300" />
                 </div>
                 <div className="mt-4 space-y-1 text-center">
-                  <p className="font-serif text-coffee-950 font-semibold italic text-sm">Empowered Cooperatives</p>
-                  <p className="text-[9px] font-sans font-bold text-leaf-700 uppercase tracking-widest">100% Traceable Sourcing</p>
+                  <p className="font-serif text-coffee-950 font-semibold italic text-sm">{language === 'ar' ? 'تعاونيات مُمكّنة' : 'Empowered Cooperatives'}</p>
+                  <p className="text-[9px] font-sans font-bold text-leaf-700 uppercase tracking-widest">{language === 'ar' ? 'مصادر قابلة للتتبع 100٪' : '100% Traceable Sourcing'}</p>
                 </div>
               </motion.div>
             </div>
@@ -863,13 +862,13 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
             >
               <div className="space-y-3">
                 <span className="text-[10px] font-sans font-extrabold tracking-[0.3em] text-leaf-400 uppercase block">
-                  SUSTAINABILITY LANDMARK
+                  {t('sust.ethics')}
                 </span>
                 <h3 className="font-display font-light text-2xl sm:text-4xl text-coffee-50 leading-tight">
-                  Nurturing the Roots of Our Coffee Heritage
+                  {language === 'ar' ? 'رعاية جذور تراثنا في القهوة' : 'Nurturing the Roots of Our Coffee Heritage'}
                 </h3>
                 <p className="text-coffee-200 text-sm sm:text-base leading-relaxed font-light">
-                  Our model is built on active, direct-trade integration with local smallholder families across Ethiopia. By avoiding intermediate brokers, we ensure absolute transparency, fair pricing, and long-term ecosystem vitality.
+                  {t('sust.intro')}
                 </p>
               </div>
 
@@ -880,8 +879,8 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
                     <Trees className="w-4 h-4" />
                   </div>
                   <div>
-                    <h4 className="font-sans font-semibold text-xs text-white uppercase tracking-wider">Ecological Harmony</h4>
-                    <p className="text-xs text-coffee-300 font-light mt-0.5">Growing under wild forest canopies to protect local biodiversity & soils.</p>
+                    <h4 className="font-sans font-semibold text-xs text-white uppercase tracking-wider">{t('sust.stewardship')}</h4>
+                    <p className="text-xs text-coffee-300 font-light mt-0.5">{t('sust.stewardshipText')}</p>
                   </div>
                 </div>
 
@@ -890,8 +889,8 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
                     <Heart className="w-4 h-4" />
                   </div>
                   <div>
-                    <h4 className="font-sans font-semibold text-xs text-white uppercase tracking-wider">Shared Prosperity</h4>
-                    <p className="text-xs text-coffee-300 font-light mt-0.5">Reinvesting transparent cash premiums directly into smallholder community funds.</p>
+                    <h4 className="font-sans font-semibold text-xs text-white uppercase tracking-wider">{language === 'ar' ? 'الازدهار المشترك' : 'Shared Prosperity'}</h4>
+                    <p className="text-xs text-coffee-300 font-light mt-0.5">{language === 'ar' ? 'إعادة استثمار عوائد نقدية شفافة مباشرة في صناديق مجتمعات صغار المزارعين.' : 'Reinvesting transparent cash premiums directly into smallholder community funds.'}</p>
                   </div>
                 </div>
 
@@ -900,8 +899,8 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
                     <ShieldCheck className="w-4 h-4" />
                   </div>
                   <div>
-                    <h4 className="font-sans font-semibold text-xs text-white uppercase tracking-wider">Absolute Sincerity</h4>
-                    <p className="text-xs text-coffee-300 font-light mt-0.5">Q-grader quality assurance verifying container-level origin and ethical audits.</p>
+                    <h4 className="font-sans font-semibold text-xs text-white uppercase tracking-wider">{language === 'ar' ? 'صدق مطلق' : 'Absolute Sincerity'}</h4>
+                    <p className="text-xs text-coffee-300 font-light mt-0.5">{language === 'ar' ? 'ضمان الجودة من Q-grader للتحقق من منشأ الحاويات وعمليات التدقيق الأخلاقية.' : 'Q-grader quality assurance verifying container-level origin and ethical audits.'}</p>
                   </div>
                 </div>
               </div>
@@ -914,7 +913,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
                   onClick={() => navigateTo('sustainability')}
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-leaf-500 text-coffee-950 text-xs font-sans font-bold tracking-widest uppercase hover:bg-leaf-400 active:bg-leaf-600 transition-colors shadow-lg shadow-leaf-500/10 hover:shadow-leaf-500/20 cursor-pointer rounded-xs"
                 >
-                  DISCOVER OUR ETHICAL VISION & INITIATIVES
+                  {language === 'ar' ? 'اكتشف رؤيتنا ومبادراتنا الأخلاقية' : 'DISCOVER OUR ETHICAL VISION & INITIATIVES'}
                   <span className="text-base leading-none">→</span>
                 </motion.button>
               </div>
@@ -932,8 +931,8 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
           transition={{ duration: 0.8 }}
           className="text-center space-y-2"
         >
-          <span className="text-xs font-mono text-leaf-600 font-semibold tracking-widest uppercase">OUR GALLERY</span>
-          <h2 className="font-display font-light text-3xl sm:text-5xl text-coffee-950">Origin Sourcing Moments</h2>
+          <span className="text-xs font-mono text-leaf-600 font-semibold tracking-widest uppercase">{language === 'ar' ? 'معرضنا' : 'OUR GALLERY'}</span>
+          <h2 className="font-display font-light text-3xl sm:text-5xl text-coffee-950">{language === 'ar' ? 'لحظات من منشأ مصادرنا' : 'Origin Sourcing Moments'}</h2>
           <p className="font-serif text-xs text-coffee-600 italic">@coffee_container</p>
         </motion.div>
 
@@ -945,7 +944,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
             transition={{ duration: 0.5 }}
             className="aspect-square overflow-hidden bg-coffee-100 rounded-xs border border-coffee-200/40 relative group shadow-xs cursor-pointer"
           >
-            <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=300&q=80" alt="moment 1" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+            <img src="/11.webp" alt="moment 1" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
             <div className="absolute inset-0 bg-coffee-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white"><Camera className="w-5 h-5" /></div>
           </motion.div>
 
@@ -956,7 +955,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
             transition={{ duration: 0.5, delay: 0.08 }}
             className="aspect-square overflow-hidden bg-coffee-100 rounded-xs border border-coffee-200/40 relative group shadow-xs cursor-pointer"
           >
-            <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=300&q=80" alt="moment 2" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+            <img src="/12.webp" alt="moment 2" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
             <div className="absolute inset-0 bg-coffee-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white"><Camera className="w-5 h-5" /></div>
           </motion.div>
 
@@ -967,7 +966,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
             transition={{ duration: 0.5, delay: 0.16 }}
             className="aspect-square overflow-hidden bg-coffee-100 rounded-xs border border-coffee-200/40 relative group shadow-xs cursor-pointer"
           >
-            <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=300&q=80" alt="moment 3" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+            <img src="/13.webp" alt="moment 3" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
             <div className="absolute inset-0 bg-coffee-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white"><Camera className="w-5 h-5" /></div>
           </motion.div>
 
@@ -978,7 +977,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
             transition={{ duration: 0.5, delay: 0.24 }}
             className="aspect-square overflow-hidden bg-coffee-100 rounded-xs border border-coffee-200/40 relative group shadow-xs cursor-pointer"
           >
-            <img src="https://images.unsplash.com/photo-1587915629618-974917417e47?auto=format&fit=crop&w=300&q=80" alt="moment 4" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+            <img src="/14.webp" alt="moment 4" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
             <div className="absolute inset-0 bg-coffee-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white"><Camera className="w-5 h-5" /></div>
           </motion.div>
 
@@ -989,7 +988,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
             transition={{ duration: 0.5, delay: 0.32 }}
             className="aspect-square overflow-hidden bg-coffee-100 rounded-xs border border-coffee-200/40 relative group shadow-xs cursor-pointer"
           >
-            <img src="https://images.unsplash.com/photo-1516257984-b1b4d707412e?auto=format&fit=crop&w=300&q=80" alt="moment 5" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+            <img src="/15.webp" alt="moment 5" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
             <div className="absolute inset-0 bg-coffee-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white"><Camera className="w-5 h-5" /></div>
           </motion.div>
 
@@ -1000,7 +999,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
             transition={{ duration: 0.5, delay: 0.4 }}
             className="aspect-square overflow-hidden bg-coffee-100 rounded-xs border border-coffee-200/40 relative group shadow-xs cursor-pointer"
           >
-            <img src="https://images.unsplash.com/photo-1531058020387-3be344559be6?auto=format&fit=crop&w=300&q=80" alt="moment 6" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+            <img src="/16.webp" alt="moment 6" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
             <div className="absolute inset-0 bg-coffee-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white"><Camera className="w-5 h-5" /></div>
           </motion.div>
         </div>
@@ -1043,14 +1042,14 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
             className="text-center space-y-3"
           >
             <span className="text-xs font-sans font-extrabold tracking-[0.3em] text-[#c22d2d] uppercase block">
-              GET IN TOUCH
+              {t('cont.getInTouch')}
             </span>
             <h2 className="font-display font-light text-3xl sm:text-5xl text-coffee-950">
-              Direct Sourcing Inquiry
+              {t('cont.intake')}
             </h2>
             <div className="h-[1px] bg-red-300 w-16 mx-auto my-3" />
             <p className="font-serif text-sm sm:text-base text-coffee-600 max-w-2xl mx-auto font-light leading-relaxed">
-              Have questions about container sizing, custom lots, or sample shipments? Message our team directly or trace our central logistics office.
+              {t('cont.intakeSub')}
             </p>
           </motion.div>
 
@@ -1066,24 +1065,24 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
             >
               <div>
                 <h3 className="font-serif font-light text-xl sm:text-2xl text-coffee-950 mb-6 pb-2 border-b border-coffee-100/50">
-                  Intake Form
+                  {t('cont.intake')}
                 </h3>
 
                 {isSubmitted ? (
                   <div className="bg-leaf-50/40 border border-leaf-100 p-8 rounded-sm text-center space-y-4 my-6">
                     <CheckCircle className="w-10 h-10 text-leaf-600 mx-auto" />
                     <h4 className="font-serif text-lg font-bold text-leaf-900">
-                      Inquiry Logged Securely
+                      {t('hero.quoteSuccess')}
                     </h4>
                     <p className="font-serif text-xs sm:text-sm text-coffee-800 max-w-md mx-auto leading-relaxed">
-                      Thank you for contacting Coffee Container. Our origin coordination representative will contact you shortly.
+                      {t('hero.quoteSuccessText')}
                     </p>
                     <div className="pt-2">
                       <button
                         onClick={() => setIsSubmitted(false)}
                         className="px-5 py-2 bg-[#c22d2d] hover:bg-[#a12323] text-white font-sans text-xs font-bold tracking-wider uppercase rounded-sm transition-colors cursor-pointer"
                       >
-                        New Message
+                        {language === 'ar' ? 'رسالة جديدة' : 'New Message'}
                       </button>
                     </div>
                   </div>
@@ -1093,7 +1092,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
                       {/* Name */}
                       <div className="space-y-1.5">
                         <label htmlFor="home-contact-name" className="block text-[10px] font-sans font-bold uppercase tracking-wider text-coffee-800">
-                          Full Name *
+                          {t('cont.fullName')}
                         </label>
                         <input
                           type="text"
@@ -1110,7 +1109,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
                       {/* Email */}
                       <div className="space-y-1.5">
                         <label htmlFor="home-contact-email" className="block text-[10px] font-sans font-bold uppercase tracking-wider text-coffee-800">
-                          Email Address *
+                          {t('cont.corpEmail')}
                         </label>
                         <input
                           type="email"
@@ -1129,7 +1128,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
                       {/* Company */}
                       <div className="space-y-1.5">
                         <label htmlFor="home-contact-company" className="block text-[10px] font-sans font-bold uppercase tracking-wider text-coffee-800">
-                          Company Name
+                          {t('cont.compRoastery')}
                         </label>
                         <input
                           type="text"
@@ -1145,7 +1144,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
                       {/* Inquiry Type */}
                       <div className="space-y-1.5">
                         <label htmlFor="home-contact-inquiryType" className="block text-[10px] font-sans font-bold uppercase tracking-wider text-coffee-800">
-                          Inquiry Type
+                          {t('cont.primaryObj')}
                         </label>
                         <select
                           id="home-contact-inquiryType"
@@ -1154,10 +1153,10 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
                           onChange={handleInputChange}
                           className="w-full px-4 py-2.5 bg-white border border-coffee-200/80 focus:border-leaf-500 rounded-sm text-sm focus:outline-none transition-colors text-coffee-950"
                         >
-                          <option value="Container Pricing">Container Pricing / Direct Cargo</option>
-                          <option value="Green Sample Request">B2B Sample Package Request</option>
-                          <option value="Custom Sourcing Partnership">Custom Sourcing Partnership</option>
-                          <option value="General Business Inquiry">General Inquiry</option>
+                          <option value="Container Pricing">{t('cont.fclPricing')}</option>
+                          <option value="Green Sample Request">{t('cont.greenSample')}</option>
+                          <option value="Custom Sourcing Partnership">{t('cont.customSourcing')}</option>
+                          <option value="General Business Inquiry">{t('cont.generalCollab')}</option>
                         </select>
                       </div>
                     </div>
@@ -1165,7 +1164,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
                     {/* Message */}
                     <div className="space-y-1.5">
                       <label htmlFor="home-contact-message" className="block text-[10px] font-sans font-bold uppercase tracking-wider text-coffee-800">
-                        Detailed Message *
+                        {t('cont.detailedMsg')}
                       </label>
                       <textarea
                         id="home-contact-message"
@@ -1174,7 +1173,7 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
                         rows={4}
                         value={formData.message}
                         onChange={handleInputChange}
-                        placeholder="Specify requested coffee volumes, target cupping grades, or preferred shipping timelines..."
+                        placeholder={t('cont.detailedPlaceholder')}
                         className="w-full px-4 py-2.5 bg-white border border-coffee-200/80 focus:border-leaf-500 rounded-sm text-sm focus:outline-none transition-colors resize-none text-coffee-950 placeholder-coffee-400"
                       />
                     </div>
@@ -1189,12 +1188,12 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
                       {isSubmitting ? (
                         <>
                           <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                          <span>Transmitting...</span>
+                          <span>{t('cont.transmitting')}</span>
                         </>
                       ) : (
                         <>
                           <Send className="w-3.5 h-3.5" />
-                          <span>Submit Inquiry</span>
+                          <span>{t('cont.submitIntake')}</span>
                         </>
                       )}
                     </motion.button>
@@ -1215,13 +1214,13 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
                 <div className="p-2 space-y-1.5 text-left shrink-0">
                   <div className="flex items-center gap-1.5 text-[10px] font-mono font-extrabold tracking-wider text-[#c22d2d] uppercase">
                     <MapPin className="w-3.5 h-3.5 shrink-0" />
-                    <span>HQ Location Trace</span>
+                    <span>{t('cont.locationMap')}</span>
                   </div>
                   <h4 className="font-serif font-light text-base text-coffee-950">
-                    Addis Ababa, Ethiopia
+                    {t('cont.sampleRoom')}
                   </h4>
                   <p className="text-[11px] text-coffee-600 leading-relaxed font-light">
-                    Our central sample room is located in the Bole District, just minutes away from Bole International Airport (ADD).
+                    {t('cont.sampleRoomSub')}
                   </p>
                 </div>
 

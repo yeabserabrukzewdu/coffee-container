@@ -9,7 +9,8 @@ export const COFFEE_VARIETIES: CoffeeVariety[] = [
     acidity: 'Vibrant, Bright, Citrusy',
     body: 'Light, Tea-like, Silky',
     notes: ['Floral', 'Citrus', 'Jasmine', 'Tea-like'],
-    characteristic: 'Complex & Fruity'
+    characteristic: 'Complex & Fruity',
+    image: '/1.webp'
   },
   {
     id: 'gesha',
@@ -19,7 +20,8 @@ export const COFFEE_VARIETIES: CoffeeVariety[] = [
     acidity: 'Vibrant, Elegant, Multi-layered',
     body: 'Light, Silky, Refined',
     notes: ['Floral', 'Honey', 'Jasmine', 'Exquisite'],
-    characteristic: 'Exquisite & Highly Prized'
+    characteristic: 'Exquisite & Highly Prized',
+    image: '/2.jpg'
   },
   {
     id: 'sidamo',
@@ -29,7 +31,8 @@ export const COFFEE_VARIETIES: CoffeeVariety[] = [
     acidity: 'Crisp, Balanced, Soft',
     body: 'Smooth, Full, Creamy',
     notes: ['Spice', 'Citrus', 'Smooth', 'Herbaceous'],
-    characteristic: 'Smooth & Spicy'
+    characteristic: 'Smooth & Spicy',
+    image: '/3.webp'
   },
   {
     id: 'limmu',
@@ -39,7 +42,8 @@ export const COFFEE_VARIETIES: CoffeeVariety[] = [
     acidity: 'Balanced, Clean, Medium-Bright',
     body: 'Clean, Medium, Velvety',
     notes: ['Floral', 'Balanced', 'Bright', 'Aromatic'],
-    characteristic: 'Bright & Aromatic'
+    characteristic: 'Bright & Aromatic',
+    image: '/4.webp'
   },
   {
     id: 'guji',
@@ -49,7 +53,8 @@ export const COFFEE_VARIETIES: CoffeeVariety[] = [
     acidity: 'Bright, Sweet, Juicy',
     body: 'Smooth, Elegant, Medium',
     notes: ['Bright Acidity', 'Floral', 'Fruity', 'Peach'],
-    characteristic: 'Bright & Complex'
+    characteristic: 'Bright & Complex',
+    image: '/5.webp'
   },
   {
     id: 'harrar',
@@ -59,7 +64,8 @@ export const COFFEE_VARIETIES: CoffeeVariety[] = [
     acidity: 'Medium, Fruity, Wine-like',
     body: 'Heavy, Creamy, Full',
     notes: ['Wild Berries', 'Wine-like', 'Distinctive', 'Blueberry'],
-    characteristic: 'Wild & Wine-like'
+    characteristic: 'Wild & Wine-like',
+    image: '/6.webp'
   },
   {
     id: 'teppi',
@@ -69,7 +75,8 @@ export const COFFEE_VARIETIES: CoffeeVariety[] = [
     acidity: 'Low, Mild, Soft',
     body: 'Medium-Full, Round',
     notes: ['Earthy', 'Lush Forest', 'Rich', 'Deep Flavor'],
-    characteristic: 'Earthy & Rich'
+    characteristic: 'Earthy & Rich',
+    image: '/7.webp'
   },
   {
     id: 'djimmah',
@@ -79,7 +86,8 @@ export const COFFEE_VARIETIES: CoffeeVariety[] = [
     acidity: 'Low, Soft',
     body: 'Bold, Heavy, Strong',
     notes: ['Dark Chocolate', 'Robust', 'Bold', 'Cocoa'],
-    characteristic: 'Bold & Chocolatey'
+    characteristic: 'Bold & Chocolatey',
+    image: '/8.webp'
   },
   {
     id: 'lekempti',
@@ -89,7 +97,8 @@ export const COFFEE_VARIETIES: CoffeeVariety[] = [
     acidity: 'Moderate, Gentle',
     body: 'Medium-Full, Rounded',
     notes: ['Nutty', 'Spicy', 'Well-rounded', 'Almond'],
-    characteristic: 'Nutty & Spiced'
+    characteristic: 'Nutty & Spiced',
+    image: '/9.webp'
   }
 ];
 
@@ -130,7 +139,7 @@ export const IMPACT_STORIES: ImpactStory[] = [
   {
     id: 'empowering-women',
     title: 'Empowering Women at Origin',
-    description: 'Co-founder Omme places a strong emphasis on supporting women-led farms and cooperatives within Ethiopia’s coffee sector—encouraging access to training, leadership, fair opportunities, and improved resources to unlock financial independence.',
+    description: 'Our cultivation and sourcing leadership places a strong emphasis on supporting women-led farms and cooperatives within Ethiopia’s coffee sector—encouraging access to training, leadership, fair opportunities, and improved resources to unlock financial independence.',
     category: 'women'
   },
   {
@@ -167,13 +176,13 @@ export const GENERAL_INFO = {
     ],
     founders: [
       {
-        name: 'Omme',
-        role: 'Co-Founder • Sourcing & Heritage',
+        name: 'Sourcing & Heritage',
+        role: 'Co-Founder • Sourcing & Heritage Lead',
         bio: 'A third-generation coffee entrepreneur deeply rooted in Ethiopia’s coffee culture and family tradition. Her journey began long before the company was formed—growing up within the coffee industry, learning directly from family experience, and witnessing every stage of the coffee process from farm to trade. She developed a deep respect for farmers, an understanding of seasonal cycles, and a strong personal mission: to ensure that coffee is not only exported, but that the people behind it—especially women in farming communities—are empowered, valued, and compensated fairly.'
       },
       {
-        name: 'Abdulmalik',
-        role: 'Co-Founder • Global Markets',
+        name: 'Global Markets',
+        role: 'Co-Founder • Global Markets Lead',
         bio: 'A foreign partner with strong cross-cultural understanding, global trade awareness, and clear insight into how international coffee markets operate. Through his experience engaging with different markets and consumer expectations, he identified a consistent gap in the coffee supply chain: buyers were seeking reliability, traceability, and consistent quality, yet sourcing systems at origin often lacked structure, transparency, and predictability. His understanding of what global buyers truly need became one of the key foundations of Coffee Container.'
       }
     ]

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import StorySection from './components/StorySection';
@@ -9,9 +10,10 @@ import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import CookieConsent from './components/CookieConsent';
 
-export default function App() {
+function AppContent() {
   const [activeTab, setActiveTab] = useState<string>('home');
   const [selectedVarietyId, setSelectedVarietyId] = useState<string>('yirgacheffee');
+  const { language } = useLanguage();
 
   const handleSelectVarietyForQuote = (varietyId: string) => {
     setSelectedVarietyId(varietyId);
@@ -59,5 +61,13 @@ export default function App() {
       {/* Professional Cookie Consent Banner */}
       <CookieConsent />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <LanguageProvider>
+      <AppContent />
+    </LanguageProvider>
   );
 }
