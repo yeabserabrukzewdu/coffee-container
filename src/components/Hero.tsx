@@ -659,63 +659,122 @@ export default function Hero({ onExplore, onRequestQuote, setActiveTab }: HeroPr
           </motion.div>
         </div>
 
-        {/* 3 stages row */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6">
+        {/* 4 stages row */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-6">
+          {/* Step 1 */}
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             whileHover={{ y: -6 }}
-            className="space-y-3 text-left group cursor-pointer"
+            className="space-y-4 text-left group cursor-pointer"
           >
-            <div className="aspect-square w-full overflow-hidden rounded-xs border border-coffee-100 shadow-xs group-hover:border-leaf-400 group-hover:shadow-md transition-all duration-300">
+            <div className="aspect-square w-full overflow-hidden rounded-xs border border-coffee-100 shadow-xs group-hover:border-leaf-400 group-hover:shadow-md transition-all duration-300 relative">
               <img 
-                src="./8.webp"
-                alt="Fresh cherries" 
+                src="./11.webp"
+                alt="Direct Sourcing" 
                 className="w-full h-full object-cover grayscale-20 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
               />
+              <div className="absolute top-3 left-3 bg-coffee-950/80 backdrop-blur-xs text-white text-[9px] font-mono font-bold tracking-wider px-2 py-0.5 rounded-sm">
+                STEP 01
+              </div>
             </div>
-            <h4 className="font-display font-semibold text-coffee-950 text-base group-hover:text-leaf-700 transition-colors">{t('hero.stage1Title')}</h4>
-            <p className="text-xs text-coffee-700 leading-relaxed font-light">{t('hero.stage1Text')}</p>
+            <div className="space-y-1.5">
+              <h4 className="font-display font-semibold text-coffee-950 text-base group-hover:text-leaf-700 transition-colors">
+                {t('hero.stage1Title')}
+              </h4>
+              <p className="text-xs text-coffee-700 leading-relaxed font-light">
+                {t('hero.stage1Text')}
+              </p>
+            </div>
           </motion.div>
 
+          {/* Step 2 */}
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.15 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             whileHover={{ y: -6 }}
-            className="space-y-3 text-left group cursor-pointer"
+            className="space-y-4 text-left group cursor-pointer"
           >
-            <div className="aspect-square w-full overflow-hidden rounded-xs border border-coffee-100 shadow-xs group-hover:border-leaf-400 group-hover:shadow-md transition-all duration-300">
+            <div className="aspect-square w-full overflow-hidden rounded-xs border border-coffee-100 shadow-xs group-hover:border-leaf-400 group-hover:shadow-md transition-all duration-300 relative">
               <img 
-                src="./9.webp" 
-                alt="Green beans" 
+                src="./8.webp" 
+                alt="Cherry Selection" 
                 className="w-full h-full object-cover grayscale-20 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
               />
+              <div className="absolute top-3 left-3 bg-coffee-950/80 backdrop-blur-xs text-white text-[9px] font-mono font-bold tracking-wider px-2 py-0.5 rounded-sm">
+                STEP 02
+              </div>
             </div>
-            <h4 className="font-display font-semibold text-coffee-950 text-base group-hover:text-leaf-700 transition-colors">{t('hero.stage2Title')}</h4>
-            <p className="text-xs text-coffee-700 leading-relaxed font-light">{t('hero.stage2Text')}</p>
+            <div className="space-y-1.5">
+              <h4 className="font-display font-semibold text-coffee-950 text-base group-hover:text-leaf-700 transition-colors">
+                {t('hero.stage2Title')}
+              </h4>
+              <p className="text-xs text-coffee-700 leading-relaxed font-light">
+                {t('hero.stage2Text')}
+              </p>
+            </div>
           </motion.div>
 
+          {/* Step 3 */}
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            whileHover={{ y: -6 }}
+            className="space-y-4 text-left group cursor-pointer"
+          >
+            <div className="aspect-square w-full overflow-hidden rounded-xs border border-coffee-100 shadow-xs group-hover:border-leaf-400 group-hover:shadow-md transition-all duration-300 relative">
+              <img 
+                src="./9.webp" 
+                alt="Organic Washing" 
+                className="w-full h-full object-cover grayscale-20 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
+              />
+              <div className="absolute top-3 left-3 bg-coffee-950/80 backdrop-blur-xs text-white text-[9px] font-mono font-bold tracking-wider px-2 py-0.5 rounded-sm">
+                STEP 03
+              </div>
+            </div>
+            <div className="space-y-1.5">
+              <h4 className="font-display font-semibold text-coffee-950 text-base group-hover:text-leaf-700 transition-colors">
+                {t('hero.stage3Title')}
+              </h4>
+              <p className="text-xs text-coffee-700 leading-relaxed font-light">
+                {t('hero.stage3Text')}
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Step 4 */}
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.3 }}
             whileHover={{ y: -6 }}
-            className="space-y-3 text-left group cursor-pointer"
+            className="space-y-4 text-left group cursor-pointer"
           >
-            <div className="aspect-square w-full overflow-hidden rounded-xs border border-coffee-100 shadow-xs group-hover:border-leaf-400 group-hover:shadow-md transition-all duration-300">
+            <div className="aspect-square w-full overflow-hidden rounded-xs border border-coffee-100 shadow-xs group-hover:border-leaf-400 group-hover:shadow-md transition-all duration-300 relative">
               <img 
                 src="./10.webp" 
-                alt="Sun dry pods" 
+                alt="Sun Drying" 
                 className="w-full h-full object-cover grayscale-20 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
               />
+              <div className="absolute top-3 left-3 bg-coffee-950/80 backdrop-blur-xs text-white text-[9px] font-mono font-bold tracking-wider px-2 py-0.5 rounded-sm">
+                STEP 04
+              </div>
             </div>
-            <h4 className="font-display font-semibold text-coffee-950 text-base group-hover:text-leaf-700 transition-colors">{t('hero.stage3Title')}</h4>
-            <p className="text-xs text-coffee-700 leading-relaxed font-light">{t('hero.stage3Text')}</p>
+            <div className="space-y-1.5">
+              <h4 className="font-display font-semibold text-coffee-950 text-base group-hover:text-leaf-700 transition-colors">
+                {t('hero.stage4Title')}
+              </h4>
+              <p className="text-xs text-coffee-700 leading-relaxed font-light">
+                {t('hero.stage4Text')}
+              </p>
+            </div>
           </motion.div>
         </div>
       </section>
