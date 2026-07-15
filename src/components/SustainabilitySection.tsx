@@ -11,6 +11,7 @@ interface SustainabilitySectionProps {
 export default function SustainabilitySection({ setActiveTab }: SustainabilitySectionProps) {
   const { t, language } = useLanguage();
   const [activeSubTab, setActiveSubTab] = useState<'impact' | 'markets' | 'advantage' | 'future'>('impact');
+  const [activeStep, setActiveStep] = useState<number>(1);
 
   const handleNavigate = (tab: string) => {
     if (setActiveTab) {
@@ -221,6 +222,223 @@ export default function SustainabilitySection({ setActiveTab }: SustainabilitySe
                       </motion.div>
                     );
                   })}
+                </div>
+              </div>
+
+              {/* Detailed Vivid Sourcing & Processing Timeline (Seed to Container) */}
+              <div className="bg-[#faf8f6] border border-coffee-100 rounded-sm p-6 sm:p-10 space-y-8 text-left">
+                <div className="space-y-2 border-b border-coffee-100 pb-6">
+                  <span className="text-[10px] font-mono tracking-widest text-[#c22d2d] uppercase font-black">
+                    {language === 'ar' ? 'رحلة الإنتاج والفرز المتكاملة' : 'THE ORIGIN TO CONTAINER FLOW'}
+                  </span>
+                  <h3 className="font-serif font-light text-3xl sm:text-4xl text-coffee-950">
+                    {language === 'ar' ? 'سلسلة التوريد ومعالجة البن بالتفصيل' : 'Vivid Sourcing & Processing Steps'}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-coffee-700 font-light max-w-2xl leading-relaxed">
+                    {language === 'ar' 
+                      ? 'ندير كل خطوة بدقة متناهية بالتعاون مع المزارعين المحليين لضمان بقاء نكهة القهوة الإثيوبية النقية والفاخرة سليمة حتى تعبئتها في الحاوية.' 
+                      : 'We manage every micro-step in close alignment with our agricultural partners, ensuring the pristine preservation of genuine Ethiopian flavor profiles from initial harvest to final export container.'}
+                  </p>
+                </div>
+
+                {/* Horizontal Stepper Buttons */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3">
+                  {[
+                    { step: 1, title: language === 'ar' ? '١. التوريد من المزارعين' : '1. Local Sourcing', icon: '🧑‍🌾' },
+                    { step: 2, title: language === 'ar' ? '٢. قطف الكرزات' : '2. Precision Pick', icon: '🍒' },
+                    { step: 3, title: language === 'ar' ? '٣. غسيل ومعالجة' : '3. Organic Wash', icon: '💧' },
+                    { step: 4, title: language === 'ar' ? '٤. تجفيف بطيء' : '4. Sun Drying', icon: '☀️' }
+                  ].map((s) => (
+                    <button
+                      key={s.step}
+                      type="button"
+                      onClick={() => setActiveStep(s.step)}
+                      className={`flex items-center gap-2 px-4 py-3 border rounded-xs text-xs font-semibold uppercase tracking-wider transition-all duration-300 cursor-pointer focus:outline-none ${
+                        activeStep === s.step
+                          ? 'bg-[#c22d2d] border-[#c22d2d] text-white shadow-xs'
+                          : 'bg-white border-coffee-100 text-coffee-800 hover:border-coffee-300 hover:bg-coffee-50/50'
+                      }`}
+                    >
+                      <span>{s.icon}</span>
+                      <span className="truncate">{s.title}</span>
+                    </button>
+                  ))}
+                </div>
+
+                {/* Active Step Panel */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-4 items-center">
+                  {/* Step Image */}
+                  <div className="lg:col-span-5 relative">
+                    <div className="aspect-square sm:aspect-16/10 lg:aspect-square w-full overflow-hidden rounded-xs border border-coffee-100 shadow-sm">
+                      <img
+                        src={
+                          activeStep === 1 ? '/11.webp' :
+                          activeStep === 2 ? '/8.webp' :
+                          activeStep === 3 ? '/9.webp' : '/10.webp'
+                        }
+                        alt="Step visual"
+                        className="w-full h-full object-cover filter grayscale-15"
+                      />
+                    </div>
+                    <div className="absolute bottom-4 left-4 bg-coffee-950/90 text-white text-[10px] font-mono tracking-widest px-3 py-1.5 rounded-sm shadow-xs uppercase font-bold">
+                      {language === 'ar' ? `المرحلة 0${activeStep}` : `STAGE 0${activeStep}`}
+                    </div>
+                  </div>
+
+                  {/* Step Description */}
+                  <div className="lg:col-span-7 space-y-5">
+                    {activeStep === 1 && (
+                      <div className="space-y-4">
+                        <span className="text-[10px] font-mono tracking-wider text-leaf-700 bg-leaf-50 px-2.5 py-1 rounded-sm uppercase font-bold">
+                          {language === 'ar' ? 'التعاون وتمكين المجتمع' : 'COOPERATIVE COMMUNITY ENGAGEMENT'}
+                        </span>
+                        <h4 className="font-serif font-light text-2xl text-coffee-950">
+                          {language === 'ar' ? 'التوريد المباشر من مزارع العائلات الصغيرة' : 'Direct Trade Sourcing from Smallholder Farmers'}
+                        </h4>
+                        <p className="text-xs sm:text-sm text-coffee-800 font-light leading-relaxed">
+                          {language === 'ar'
+                            ? 'نعمل بشكل وثيق مع أكثر من ٥,٠٠٠ مزارع مستقل وجمعيات تعاونية في المرتفعات الإثيوبية الخصبة (مثل ييرغاشيفي، سيدامو، وغوجي). نلتزم بأسعار التجارة العادلة متجاوزين الوسطاء لتقديم حوافز مالية مجزية مباشرة للأسر المنتجة.'
+                            : 'We work hand-in-hand with over 5,000 smallholder growers and organized village cooperatives across legendary high-altitude terroirs. By paying premium fair trade pricing directly to growers, we bypass complex agent structures, securing mutual loyalty and sustainable farming.'}
+                        </p>
+                        <div className="space-y-2 pt-2 border-t border-coffee-100">
+                          <h5 className="text-[11px] font-mono uppercase text-coffee-950 tracking-wider font-extrabold">
+                            {language === 'ar' ? 'نقاط الفحص والتحقق للتوريد:' : 'Traceability & Trust Checkpoints:'}
+                          </h5>
+                          <ul className="text-xs text-coffee-700 font-light space-y-1.5 list-disc pl-4 font-serif">
+                            <li>
+                              {language === 'ar' 
+                                ? 'تسجيل جغرافي كامل لكل مزارع شريك يضمن دقة وتتبع المنشأ.'
+                                : 'Geotagged monitoring of partner farms guarantees absolute regional authenticity.'}
+                            </li>
+                            <li>
+                              {language === 'ar'
+                                ? 'دفع مكافآت وعلاوات نقدية إضافية عند تزويدنا بدفعات عالية الجودة (أعلى من ٨٥ نقطة).'
+                                : 'Quality premium bonuses paid directly, stimulating continuous community farm investment.'}
+                            </li>
+                            <li>
+                              {language === 'ar'
+                                ? 'توجيه زراعي مستمر لتحسين إنتاجية الشجيرات بالطرق العضوية المستدامة.'
+                                : 'Agronomic education on composting and water conservation distributed throughout harvest seasons.'}
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    )}
+
+                    {activeStep === 2 && (
+                      <div className="space-y-4">
+                        <span className="text-[10px] font-mono tracking-wider text-[#c22d2d] bg-red-50 px-2.5 py-1 rounded-sm uppercase font-bold">
+                          {language === 'ar' ? 'الانتقاء والفرز الفائق' : 'ULTRA-COMPREHENSIVE SELECTIVE HARVEST'}
+                        </span>
+                        <h4 className="font-serif font-light text-2xl text-coffee-950">
+                          {language === 'ar' ? 'قطف يدوي للكرزات الحمراء المكتملة' : 'Precision Picking of Fully-Ripe Red Cherries'}
+                        </h4>
+                        <p className="text-xs sm:text-sm text-coffee-800 font-light leading-relaxed">
+                          {language === 'ar'
+                            ? 'لا توجد آلة تضاهي دقة عين الإنسان. يقطف جامعو البن لدينا يدوياً كرزات البن التي بلغت ذروة النضج السكري فقط. نترك الحبات الخضراء والزائدة النضج على الأغصان للحفاظ على كوب قهوة ناعم وخالٍ من العيوب وحموضة شديدة النقاء.'
+                            : 'No machine can match human precision. Our trained pickers pass through the wild forests multiple times, hand-selecting only fully-saturated, crimson-red cherries. Under-ripe green cherries are left on the branches to ripen further, eliminating sourness and bitter defects.'}
+                        </p>
+                        <div className="space-y-2 pt-2 border-t border-coffee-100">
+                          <h5 className="text-[11px] font-mono uppercase text-coffee-950 tracking-wider font-extrabold">
+                            {language === 'ar' ? 'معايير جودة الفرز والانتقاء:' : 'Cherry Selection Standards:'}
+                          </h5>
+                          <ul className="text-xs text-coffee-700 font-light space-y-1.5 list-disc pl-4 font-serif">
+                            <li>
+                              {language === 'ar'
+                                ? 'فحص عشوائي للرطوبة وتركيز السكريات باستخدام أجهزة قياس الانكسار الرقمية.'
+                                : 'Brix density testing (refractometers) performed at collection stations to verify peak sugars.'}
+                            </li>
+                            <li>
+                              {language === 'ar'
+                                ? 'فرز يدوي ثانٍ على طاولات الفرز لاستبعاد أي حبات مكسورة أو متضررة.'
+                                : 'Secondary hand-sorting table review where damaged or insect-bitten fruits are separated.'}
+                            </li>
+                            <li>
+                              {language === 'ar'
+                                ? 'معدل صفر عيوب لضمان تجانس مذاق الكوب النهائي عند التحميص.'
+                                : 'Zero-defect criteria for specialty micro-lots, creating balanced clean acidity in every roast.'}
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    )}
+
+                    {activeStep === 3 && (
+                      <div className="space-y-4">
+                        <span className="text-[10px] font-mono tracking-wider text-blue-700 bg-blue-50 px-2.5 py-1 rounded-sm uppercase font-bold">
+                          {language === 'ar' ? 'المعالجة الرطبة الصديقة للبيئة' : 'PURE SPRING WATER WET PROCESSING'}
+                        </span>
+                        <h4 className="font-serif font-light text-2xl text-coffee-950">
+                          {language === 'ar' ? 'غسيل بمياه الينابيع والتخمير الطبيعي' : 'Organic Fermentation & Natural Spring Washing'}
+                        </h4>
+                        <p className="text-xs sm:text-sm text-coffee-800 font-light leading-relaxed">
+                          {language === 'ar'
+                            ? 'يتم إزالة القشرة الخارجية بلطف خلال ساعات معدودة من الحصاد، تليها عملية تخمير طبيعية مدتها ٢٤ إلى ٣٦ ساعة لإبراز الإيحاءات العطرية والياسمينية النادرة. نستخدم مياه ينابيع جبلية متدفقة، حيث نعتمد على قنوات تصفية تفصل الحبوب الثقيلة عن الخفيفة.'
+                            : 'Within hours of harvesting, cherries enter eco-friendly pulpers. The parchment is fermented naturally in clear-water tanks for 24 to 36 hours, breaking down mucilage and enhancing complex jasmine aromatics. We wash them in long mountain channels, letting gravity float away lesser-density seeds.'}
+                        </p>
+                        <div className="space-y-2 pt-2 border-t border-coffee-100">
+                          <h5 className="text-[11px] font-mono uppercase text-coffee-950 tracking-wider font-extrabold">
+                            {language === 'ar' ? 'خطوات المعالجة والغسيل النقية:' : 'Processing & Fermentation Controls:'}
+                          </h5>
+                          <ul className="text-xs text-coffee-700 font-light space-y-1.5 list-disc pl-4 font-serif">
+                            <li>
+                              {language === 'ar'
+                                ? 'تدوير كامل للمياه المستخدمة لتقليل البصمة المائية والحفاظ على البيئة المحلية.'
+                                : 'Closed-loop water recycling reduces total ecological footprint at washing centers.'}
+                            </li>
+                            <li>
+                              {language === 'ar'
+                                ? 'فحص ومراقبة دقيقة لدرجات الحموضة (pH) أثناء التخمير لمنع الإفراط في التفاعل.'
+                                : 'Continuous pH monitoring in fermentation tanks to safeguard clean, bright profiles.'}
+                            </li>
+                            <li>
+                              {language === 'ar'
+                                ? 'الفرز بكثافة المياه يضمن الحصول على أنقى حبات البن الصلبة والكاملة.'
+                                : 'Density grading channels guarantee only heavy, complex, well-formed seeds make the grade.'}
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    )}
+
+                    {activeStep === 4 && (
+                      <div className="space-y-4">
+                        <span className="text-[10px] font-mono tracking-wider text-amber-700 bg-amber-50 px-2.5 py-1 rounded-sm uppercase font-bold">
+                          {language === 'ar' ? 'التجفيف الطبيعي المتقن' : 'SLOW COMPREHENSIVE SUN-DRYING'}
+                        </span>
+                        <h4 className="font-serif font-light text-2xl text-coffee-950">
+                          {language === 'ar' ? 'تجفيف بطيء على أسرة الخيزران المرتفعة' : 'Slow Dehydration on Raised African Bamboo Beds'}
+                        </h4>
+                        <p className="text-xs sm:text-sm text-coffee-800 font-light leading-relaxed">
+                          {language === 'ar'
+                            ? 'نفرش البن بعناية فائقة على أسرة أفريقية مرتفعة مصنوعة من الخيزران لضمان التهوية الممتازة. يستمر التجفيف تحت شمس المرتفعات اللطيفة والرياح الباردة لـ ١٢ إلى ٢٠ يوماً، مع تقليب دوري مستمر باليد لضمان تجفيف متماثل وثبات مثالي.'
+                            : 'The wet parchment is distributed in thin layers on elevated African bamboo tables, allowing cooling mountain breezes to flow from above and below. Drying is carried out slowly over 12 to 20 days. Under steady gentle sun, our handlers continuously rotate the parchment.'}
+                        </p>
+                        <div className="space-y-2 pt-2 border-t border-coffee-100">
+                          <h5 className="text-[11px] font-mono uppercase text-coffee-950 tracking-wider font-extrabold">
+                            {language === 'ar' ? 'معايير ومراقبة التجفيف:' : 'Drying Table Checkpoints:'}
+                          </h5>
+                          <ul className="text-xs text-coffee-700 font-light space-y-1.5 list-disc pl-4 font-serif">
+                            <li>
+                              {language === 'ar'
+                                ? 'تغطية البن بالكامل في أوقات الشمس الحارقة والليل لحماية الحبوب من الصدمات الحرارية والرطوبة.'
+                                : 'Shaded canopies deployed during peak midday heat and night to prevent moisture re-absorption.'}
+                            </li>
+                            <li>
+                              {language === 'ar'
+                                ? 'تقليب الحبوب بمعدل ٤ إلى ٦ مرات يومياً لضمان تجانس مثالي لرطوبة الدفعة.'
+                                : 'Continuous hand-raking 4 to 6 times daily ensures even color and sugar stabilization.'}
+                            </li>
+                            <li>
+                              {language === 'ar'
+                                ? 'فحص ومعايرة الرطوبة بانتظام حتى تصل للنسبة الدولية المحددة لتصدير الحاويات.'
+                                : 'Target moisture lock at exactly 11.0% (measured via calibrated soil/grain moisture meters).'}
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
 
